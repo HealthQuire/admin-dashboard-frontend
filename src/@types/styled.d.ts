@@ -10,7 +10,6 @@ declare module "styled-components" {
       accentOne: string;
       accentTwo: string;
       accentThree: string;
-      transparent: (number) => string;
     };
   }
 }

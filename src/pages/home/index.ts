@@ -1,3 +1,3 @@
-import HomePage from "./home-page"
+import Home from "./home.tsx"
 
-export default HomePage
+export default Home
