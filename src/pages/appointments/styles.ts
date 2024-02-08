@@ -2,10 +2,11 @@ import styled from "styled-components";
 import "@fontsource/roboto/900.css";
 
 export const HomePageWrapper = styled.div`
-  width: 100%;
-  min-height: calc(100vh - 150px);
+  width: calc(100vw - 300px);
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #212224;
 `;
 
