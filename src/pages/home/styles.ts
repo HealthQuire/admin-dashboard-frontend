@@ -2,9 +2,8 @@ import styled from "styled-components";
 import theme from "../../styles/theme.ts";
 
 export const HomePageWrapper = styled.div`
-  //position: relative;
   width: calc(100vw - 268px);
-  min-height: 101vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,7 +16,7 @@ export const HomePageHeader = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: ${theme.colors.textSecondary};
+  background-color: ${theme.colors.accentOne};
   margin-bottom: 30px;
 `;
 
@@ -28,27 +27,45 @@ export const HomePageBlock = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-color: ${theme.colors.textSecondary};
-  margin: 0 15px 30px;
-`;
-
-export const HomePageBlockCentral = styled.div`
-  width: 92%;
-  height: 500px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  background-color: ${theme.colors.textSecondary};
-  margin: 0 15px 30px;
+  margin: 0 15px;  
 `;
 
 export const HomePageBlockElement = styled.div`
-  width: 360px;
+  width: 30%;
   height: 170px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: ${theme.colors.accentOne};
+`;
+
+export const HomePageBlockCentral = styled.div`
+  width: 92%;
+  height: 430px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 15px 30px 15px;
+`;
+
+export const HomePageBlockCentralElementLeft = styled.div`
+  width: 65%;
+  height: 400px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background-color: ${theme.colors.accentOne};
+`;
+
+export const HomePageBlockCentralElementRight = styled.div`
+  width: 30%;
+  height: 400px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
   background-color: ${theme.colors.accentOne};
 `;

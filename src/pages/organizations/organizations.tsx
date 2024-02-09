@@ -1,5 +1,5 @@
 export default function Organizations() {
     return (
-        "organizations"
+        <p>"organizations"</p>
     );
 }
