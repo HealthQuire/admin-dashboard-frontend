@@ -1,8 +1,24 @@
-import { HomePageWrapper } from "./styles";
+import {HomePageBlock, HomePageBlockCentral, HomePageBlockElement, HomePageHeader, HomePageWrapper} from "./styles";
 export default function Home() {
   return (
       <HomePageWrapper>
-          page
+          <HomePageHeader>
+              
+          </HomePageHeader>
+          <HomePageBlock>
+              <HomePageBlockElement>
+                  
+              </HomePageBlockElement>
+              <HomePageBlockElement>
+
+              </HomePageBlockElement>
+              <HomePageBlockElement>
+
+              </HomePageBlockElement>
+          </HomePageBlock>
+          <HomePageBlockCentral>
+              
+          </HomePageBlockCentral>
       </HomePageWrapper>
   );
 }

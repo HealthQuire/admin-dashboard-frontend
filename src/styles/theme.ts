@@ -3,6 +3,7 @@ import { DefaultTheme } from "styled-components";
 const mainPalette = {
   bgPrimary: "#111111",
   bgSecondary: "#1D1D20",
+  bgThird: "#323437",
   textPrimary: "#FFFFFF",
   textSecondary: "#E7EAEC",
   accentOne: "#3B8C6E",

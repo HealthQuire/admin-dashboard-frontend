@@ -6,6 +6,7 @@ export const RouterWrapperDiv = styled.div`
     height: 100%;
     width: 100%;
     flex-direction: row;
-    align-items: center;
+    align-items: start;
+    justify-content: end;
     background-color: ${theme.colors.bgSecondary};
 `

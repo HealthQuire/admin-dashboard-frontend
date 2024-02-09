@@ -4,13 +4,16 @@ import {Link, NavLink} from "react-router-dom";
 import theme from "../../styles/theme.ts";
 
 export const HeaderWrapper = styled.div`
+  position: fixed;
+  left: 0;
+  top: 0;
   display: flex;
   flex-direction: column;
   width: 250px;
   height: 100vh;
   justify-content: space-between;
   align-items: start;
-  background-color: #323437;
+  background-color: ${theme.colors.bgThird};
   cursor: pointer;
 `;
 
