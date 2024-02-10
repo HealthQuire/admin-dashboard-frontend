@@ -108,7 +108,7 @@ export default function Header() {
                         <NonActiveZone>
                             <OptionBody>
                                 <FontAwesomeIcon style={optionIconStyle} icon={faFileCode} />
-                                <p>Documentation</p>
+                                <p>API Documentation</p>
                             </OptionBody>
                         </NonActiveZone>
                     </OptionContainer>

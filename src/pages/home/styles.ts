@@ -11,61 +11,86 @@ export const HomePageWrapper = styled.div`
 
 export const HomePageHeader = styled.div`
   width: 100%;
-  height: 70px;
+  height: 90px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
-  background-color: ${theme.colors.accentOne};
-  margin-bottom: 30px;
+  //background-color: ${theme.colors.accentOne};
+  font-size: 20px;
 `;
 
-export const HomePageBlock = styled.div`
+export const HomePageHeaderBox = styled.div`
   width: 92%;
-  height: 200px;
+  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin: 0 15px;  
+`;
+
+export const HomePageBlock = styled.div`
+  width: 92%;
+  height: 170px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 15px;
+  cursor: pointer;
 `;
 
 export const HomePageBlockElement = styled.div`
-  width: 30%;
+  width: 32%;
+  height: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: ${theme.colors.bgThird};
+  &:hover {
+    opacity: 0.5;
+  }
+`;
+
+export const HomePageBlockElementHQ = styled.div`
+  width: 32%;
   height: 170px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: ${theme.colors.accentOne};
+  &:hover {
+    opacity: 0.5;
+  }
 `;
 
 export const HomePageBlockCentral = styled.div`
   width: 92%;
-  height: 430px;
+  height: 450px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin: 0 15px 30px 15px;
+  margin: 10px 15px 30px 15px;
 `;
 
 export const HomePageBlockCentralElementLeft = styled.div`
-  width: 65%;
-  height: 400px;
+  width: 66%;
+  height: 450px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
-  background-color: ${theme.colors.accentOne};
+  justify-content: center;
+  background-color: ${theme.colors.bgThird};
 `;
 
 export const HomePageBlockCentralElementRight = styled.div`
-  width: 30%;
-  height: 400px;
+  width: 32%;
+  height: 450px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
-  background-color: ${theme.colors.accentOne};
+  justify-content: center;
+  background-color: ${theme.colors.bgThird};
 `;
