@@ -1,14 +1,15 @@
 import { DefaultTheme } from "styled-components";
 
 const mainPalette = {
-  bgPrimary: "#111111",
-  bgSecondary: "#1D1D20",
-  bgThird: "#323437",
+  bgPrimary: "#1D1D20",
+  bgSecondary: "#323437",
+  bgPads: "#4d5052",
+  br: "#2b2c2f",
   textPrimary: "#FFFFFF",
   textSecondary: "#E7EAEC",
   accentOne: "#3B8C6E",
   accentTwo: "#89D99D",
-  accentThree: "#86C3FC"
+  accentBr: "#5aa882"
 };
 
 const basicTheme: DefaultTheme = {

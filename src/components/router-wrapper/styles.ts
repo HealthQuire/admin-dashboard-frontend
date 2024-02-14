@@ -8,5 +8,5 @@ export const RouterWrapperDiv = styled.div`
     flex-direction: row;
     align-items: start;
     justify-content: end;
-    background-color: ${theme.colors.bgSecondary};
+    background-color: ${theme.colors.bgPrimary};
 `

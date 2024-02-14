@@ -13,8 +13,10 @@ export const HeaderWrapper = styled.div`
   height: 100vh;
   justify-content: space-between;
   align-items: start;
-  background-color: ${theme.colors.bgThird};
+  background-color: ${theme.colors.bgSecondary};
   cursor: pointer;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 export const HeaderTop = styled.div`

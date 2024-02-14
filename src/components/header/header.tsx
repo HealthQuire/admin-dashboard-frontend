@@ -12,17 +12,11 @@ import {
     LeftWall,
     NonActiveZone
 } from "./styles";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-    faHospital,
-    faUserDoctor,
-    faUsers,
-    faCalendarCheck,
-    faReceipt,
-    faContactBook,
-    faFileCode,
-    faAnglesRight
-} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAnglesRight, faHome } from '@fortawesome/free-solid-svg-icons'
+
+import { OptionContainers, OptionContainersSupport} from "./content.ts";
+import {nanoid} from "@reduxjs/toolkit";
 
 
 const optionIconStyle = {
@@ -50,77 +44,48 @@ export default function Header() {
                     </HeaderTitle>
                 </HeaderTitleContainer>
                 <HeaderUnName>
-                    NAVIGATION
+                    MAIN
+                </HeaderUnName>
+                <OptionContainer to="">
+                    <LeftWall/>
+                    <NonActiveZone>
+                        <OptionBody>
+                            <FontAwesomeIcon style={optionIconStyle} icon={faHome} />
+                            <p>Home</p>
+                        </OptionBody>
+                    </NonActiveZone>
+                </OptionContainer>
+                <HeaderUnName>
+                    WORKSHOPS
                 </HeaderUnName>
                 <HeaderBox>
-                    <OptionContainer to="/organizations">
-                        <LeftWall/>
-                        <NonActiveZone>
-                            <OptionBody>
-                                <FontAwesomeIcon style={optionIconStyle} icon={faHospital} />
-                                <p>Organizations</p>
-                            </OptionBody>
-                        </NonActiveZone>
-                    </OptionContainer>
-                    <OptionContainer to="/doctors">
-                        <LeftWall/>
-                        <NonActiveZone>
-                            <OptionBody>
-                                <FontAwesomeIcon style={optionIconStyle} icon={faUserDoctor} />
-                                <p>Doctors</p>
-                            </OptionBody>
-                        </NonActiveZone>
-                    </OptionContainer>
-                    <OptionContainer to="/clients">
-                        <LeftWall/>
-                        <NonActiveZone>
-                            <OptionBody>
-                                <FontAwesomeIcon style={optionIconStyle} icon={faUsers} />
-                                <p>Clients</p>
-                            </OptionBody>
-                        </NonActiveZone>
-                    </OptionContainer>
-                    <OptionContainer to="/appointments">
-                        <LeftWall/>
-                        <NonActiveZone>
-                            <OptionBody>
-                                <FontAwesomeIcon style={optionIconStyle} icon={faCalendarCheck} />
-                                <p>Appointments</p>
-                            </OptionBody>
-                        </NonActiveZone>
-                    </OptionContainer>
-                    <OptionContainer to="/cards">
-                        <LeftWall/>
-                        <NonActiveZone>
-                            <OptionBody>
-                                <FontAwesomeIcon style={optionIconStyle} icon={faReceipt} />
-                                <p>Cards</p>
-                            </OptionBody>
-                        </NonActiveZone>
-                    </OptionContainer>
+                    {OptionContainers.map(option =>
+                        <OptionContainer key={nanoid()} to={option.to}>
+                            <LeftWall/>
+                            <NonActiveZone>
+                                <OptionBody>
+                                    <FontAwesomeIcon style={optionIconStyle} icon={option.icon} />
+                                    <p>{option.text}</p>
+                                </OptionBody>
+                            </NonActiveZone>
+                        </OptionContainer>
+                    )}
                 </HeaderBox>
                 <HeaderUnName>
                     SUPPORT
                 </HeaderUnName>
                 <HeaderBox>
-                    <OptionContainer to="/aы">
-                        <LeftWall/>
-                        <NonActiveZone>
-                            <OptionBody>
-                                <FontAwesomeIcon style={optionIconStyle} icon={faFileCode} />
-                                <p>API Documentation</p>
-                            </OptionBody>
-                        </NonActiveZone>
-                    </OptionContainer>
-                    <OptionContainer to="/sd">
-                        <LeftWall/>
-                        <NonActiveZone>
-                            <OptionBody>
-                                <FontAwesomeIcon style={optionIconStyle} icon={faContactBook} />
-                                <p>Contacts</p>
-                            </OptionBody>
-                        </NonActiveZone>
-                    </OptionContainer>
+                    {OptionContainersSupport.map(option =>
+                        <OptionContainer key={nanoid()} to={option.to}>
+                            <LeftWall/>
+                            <NonActiveZone>
+                                <OptionBody>
+                                    <FontAwesomeIcon style={optionIconStyle} icon={option.icon} />
+                                    <p>{option.text}</p>
+                                </OptionBody>
+                            </NonActiveZone>
+                        </OptionContainer>
+                    )}
                 </HeaderBox>
             </HeaderTop>
             <HeaderBottom to="https://github.com/HealthQuire">
