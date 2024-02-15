@@ -1,11 +1,7 @@
-import { createBrowserRouter } from "react-router-dom"
-import Home from "./pages/home"
-import Organizations from "./pages/organizations";
-import Doctors from "./pages/doctors";
-import Clients from "./pages/clients";
-import Appointments from "./pages/appointments";
-import Cards from "./pages/cards";
+import {createBrowserRouter} from "react-router-dom"
 import RouterWrapper from "./components/router-wrapper/router-wrapper"
+import Home from "./pages/home"
+import Workshop from "./pages/workshop";
 
 
 const router = createBrowserRouter([
@@ -19,23 +15,27 @@ const router = createBrowserRouter([
             },
             {
                 path: "organizations",
-                element: <Organizations />
+                element: <Workshop />
             },
             {
                 path: "doctors",
-                element: <Doctors />
+                element: <Workshop />
             },
             {
                 path: "clients",
-                element: <Clients />
+                element: <Workshop />
             },
             {
-                path: "appointments",
-                element: <Appointments />
+                path: "appointments/*",
+                element: <Workshop />
             },
             {
-                path: "cards",
-                element: <Cards  />
+                path: "services",
+                element: <Workshop />
+            },
+            {
+                path: "documentation",
+                element: "Sorry... Not implemented yet"
             }
         ]
     }

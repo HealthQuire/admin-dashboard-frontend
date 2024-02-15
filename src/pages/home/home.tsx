@@ -1,105 +1,149 @@
 import {
+    ExpandIcon,
     HomePageBlock,
     HomePageBlockCentral,
     HomePageBlockCentralElementLeft,
     HomePageBlockCentralElementRight,
-    HomePageBlockElement, HomePageBlockElementToApp,
-    HomePageHeader, HomePageHeaderBox, HomePageHeaderLogout,
-    HomePageWrapper, HPBBody, HPBCBody, HPBCBodyElement, HPBCHeader, HPBHeader, HPBHeaderText, HPBHeaderToApp
+    HomePageBlockElement,
+    HomePageBlockElementToApp,
+    HomePageWrapper,
+    HPBBody,
+    HPBCBody,
+    HPBCHeader,
+    HPBHeader,
+    HPBHeaderText,
+    HPBHeaderToApp
 } from "./styles";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSliders, faRoute, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import HPBCBodyAppointmentsElement
+    from "../../components/home-components/HPBC/Appointment/HPBCBodyAppointmentsElement.tsx";
+import HPBCBodyOrganizationsElement
+    from "../../components/home-components/HPBC/Organization/HPBCBodyOrganizationsElement.tsx";
+import {Appointment} from "../../@types/Home/appointment.ts";
+import {Organization} from "../../@types/Home/organization.ts";
 
+import { HPBlocks } from "./content.ts";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSliders, faRoute, faExpand } from '@fortawesome/free-solid-svg-icons'
 
 import Chart from "../../components/home-components/Chart";
-import { HPBlocks } from "./content.ts";
 import theme from "../../styles/theme.ts";
 import {nanoid} from "@reduxjs/toolkit";
+import {useNavigate} from "react-router-dom";
 
 export default function Home() {
 
-    const logOut = () => {
-        console.log("as")
-    }
+    const navigate = useNavigate();
 
-    const rA = [
+    const rA: Appointment[] = [
         {
-            name: "sd"
+            id: "1",
+            clientFullName: "Client Jackson",
+            serviceName: "Full observation",
+            dt: new Date(),
+            isConfirmed: true,
+            avatarUrl: "/userDefault.avif"
         },
         {
-            name: "sd"
+            id: "2",
+            clientFullName: "Bob Carti",
+            serviceName: "Stomach check",
+            dt: new Date(),
+            isConfirmed: false,
+            avatarUrl: "/userDefault.avif"
         },
         {
-            name: "sd"
+            id: "3",
+            clientFullName: "Jennie O",
+            serviceName: "Uzi",
+            dt: new Date(),
+            isConfirmed: true,
+            avatarUrl: "/userDefault.avif"
         },
         {
-            name: "sd"
+            id: "4",
+            clientFullName: "Benedikt Cumberbatch",
+            serviceName: "Teeth check",
+            dt: new Date(),
+            isConfirmed: true,
+            avatarUrl: "/userDefault.avif"
         },
         {
-            name: "sd"
-        },
+            id: "5",
+            clientFullName: "Tazeev Almaz",
+            serviceName: "Head check",
+            dt: new Date(),
+            isConfirmed: false,
+            avatarUrl: "/userDefault.avif"
+        }
     ]
 
-    const mPO = [
+    const mPO: Organization[] = [
         {
-            name: "sd"
+            id: "1",
+            name: "HealthQuired",
+            status: true,
+            avatarUrl: "/orgDefault.avif"
         },
         {
-            name: "sd"
+            id: "2",
+            name: "MedHouse",
+            status: true,
+            avatarUrl: "/orgDefault.avif"
         },
         {
-            name: "sd"
+            id: "3",
+            name: "GoAndHeal",
+            status: true,
+            avatarUrl: "/orgDefault.avif"
         },
         {
-            name: "sd"
+            id: "4",
+            name: "HealthyHeart",
+            status: false,
+            avatarUrl: "/orgDefault.avif"
         },
         {
-            name: "sd"
+            id: "5",
+            name: "FamilyTherapy",
+            status: true,
+            avatarUrl: "/orgDefault.avif"
         },
     ]
 
 
     return (
       <HomePageWrapper>
-          <HomePageHeader>
-              <HomePageHeaderBox>
-                  <p>Home</p>
-                  <HomePageHeaderLogout onClick={logOut}>
-                      <FontAwesomeIcon icon={faArrowRightFromBracket}></FontAwesomeIcon>
-                  </HomePageHeaderLogout>
-              </HomePageHeaderBox>
-          </HomePageHeader>
           {HPBlocks.map(block =>
               <HomePageBlock key={nanoid()}>
-                  {block.map(element =>
-                      <HomePageBlockElement key={nanoid()}>
-                          <HPBHeader to={element.to}>
-                              <HPBHeaderText>
-                                {element.text}
-                              </HPBHeaderText>
-                              <FontAwesomeIcon style={{marginRight: "20px"}} icon={faSliders}></FontAwesomeIcon>
-                          </HPBHeader>
-                          <HPBBody>
-                              {Chart(Math.floor(Math.random() * (300)), 300, element.statuses)}
-                          </HPBBody>
-                      </HomePageBlockElement>
+                  { block.map(element =>
+                  <HomePageBlockElement key={nanoid()}>
+                      <HPBHeader to={element.to}>
+                          <HPBHeaderText>
+                            {element.text}
+                          </HPBHeaderText>
+                          <FontAwesomeIcon style={{marginRight: "20px"}} icon={faSliders}></FontAwesomeIcon>
+                      </HPBHeader>
+                      <HPBBody>
+                          {Chart(Math.floor(Math.random() * (300)), 300, element.statuses)}
+                      </HPBBody>
+                  </HomePageBlockElement>
                   )}
-                  {
-                      block.length == 2 ?
-                      <HomePageBlockElementToApp to="https://github.com/HealthQuire">
-                          <HPBHeaderToApp>
-                              <HPBHeaderText style={{borderColor: theme.colors.accentTwo, color: "white"}}>
-                                  Open HealthQuire
-                              </HPBHeaderText>
-                          </HPBHeaderToApp>
-                          <HPBBody style={{flexDirection: "column"}}>
-                              <FontAwesomeIcon style={{marginRight: "23px", fontSize: "50px"}}
-                                               icon={faRoute}></FontAwesomeIcon>
-                              <div style={{marginTop: "20px"}}>https://github.com/HealthQuire</div>
-                          </HPBBody>
-                      </HomePageBlockElementToApp>
-                      : null
+                  { block.length == 2 ?
+                  <HomePageBlockElementToApp to="https://github.com/HealthQuire">
+                      <HPBHeaderToApp>
+                          <HPBHeaderText style={{borderColor: theme.colors.accentTwo, color: "white"}}>
+                              Open HealthQuire
+                          </HPBHeaderText>
+                      </HPBHeaderToApp>
+                      <HPBBody style={{flexDirection: "column"}}>
+                          <FontAwesomeIcon style={{marginRight: "23px", fontSize: "50px"}}
+                                           icon={faRoute}></FontAwesomeIcon>
+                          <div style={{marginTop: "20px"}}>https://github.com/HealthQuire</div>
+                      </HPBBody>
+                  </HomePageBlockElementToApp>
+                  : null
                   }
               </HomePageBlock>
           )}
@@ -109,12 +153,11 @@ export default function Home() {
                       <HPBHeaderText>
                           Recent appointments
                       </HPBHeaderText>
+                      <ExpandIcon onClick={() => navigate("/appointments")} icon={faExpand}/>
                   </HPBCHeader>
                   <HPBCBody>
                       {rA.map((element) =>
-                          <HPBCBodyElement key={nanoid()}>
-                              {element.name}
-                          </HPBCBodyElement>
+                          HPBCBodyAppointmentsElement(element)
                       )}
                   </HPBCBody>
               </HomePageBlockCentralElementLeft>
@@ -123,12 +166,11 @@ export default function Home() {
                       <HPBHeaderText>
                           Most popular organizations
                       </HPBHeaderText>
+                      <ExpandIcon onClick={() => navigate("/organizations")} icon={faExpand}/>
                   </HPBCHeader>
                   <HPBCBody>
                       {mPO.map((element) =>
-                          <HPBCBodyElement key={nanoid()}>
-                              {element.name}
-                          </HPBCBodyElement>
+                          HPBCBodyOrganizationsElement(element)
                       )}
                   </HPBCBody>
               </HomePageBlockCentralElementRight>

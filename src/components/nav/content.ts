@@ -29,15 +29,15 @@ export const OptionContainers = [
         text: "Appointments"
     },
     {
-        to: "/cards",
+        to: "/services",
         icon: faReceipt,
-        text: "Cards"
+        text: "Services"
     }
 ];
 
 export const OptionContainersSupport = [
     {
-        to: "/notimplemented",
+        to: "/documentation",
         icon: faFileCode,
         text: "API Documentation"
     }

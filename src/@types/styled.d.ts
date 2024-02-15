@@ -12,6 +12,7 @@ declare module "styled-components" {
       accentOne: string;
       accentTwo: string;
       accentBr: string;
+      declineColor: string;
     };
   }
 }

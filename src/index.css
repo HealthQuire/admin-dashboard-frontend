@@ -2,12 +2,12 @@
 
 :root {
   color-scheme: light dark;
-
   font-family: "Roboto", serif;
 }
 
 body {
   margin: 0;
+  overflow-x: hidden;
 }
 
 a {

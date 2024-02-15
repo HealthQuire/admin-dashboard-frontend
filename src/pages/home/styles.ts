@@ -1,47 +1,15 @@
 import styled from "styled-components";
 import theme from "../../styles/theme.ts";
 import {Link} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export const HomePageWrapper = styled.div`
-  width: calc(100vw - 268px);
+  width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
-
-export const HomePageHeader = styled.div`
-  width: 100%;
-  height: 90px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  font-size: 20px;
-`;
-
-export const HomePageHeaderBox = styled.div`
-  width: 92%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-export const HomePageHeaderLogout = styled.div`
-  width: fit-content;
-  height: fit-content;
-  padding: 12px 12px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 18px;
-  cursor: pointer;
-  &:hover {
-    opacity: 0.5;
-  }
-`;
-
 
 export const HomePageBlock = styled.div`
   width: 92%;
@@ -52,6 +20,7 @@ export const HomePageBlock = styled.div`
   justify-content: space-between;
   margin: 10px 15px;
   cursor: pointer;
+  overflow: hidden;
 `;
 
 export const HomePageBlockElement = styled.div`
@@ -134,7 +103,8 @@ export const HomePageBlockCentral = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin: 10px 15px 30px 15px;
+  margin: 10px 15px 40px 15px;
+  overflow: hidden;
 `;
 
 export const HPBCHeader = styled.div`
@@ -143,7 +113,7 @@ export const HPBCHeader = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: start;
+  justify-content: space-between;
   border-bottom: 1px solid ${theme.colors.br};
   margin: 0;
   cursor: pointer;
@@ -156,16 +126,6 @@ export const HPBCBody = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  margin: 0;
-  cursor: pointer;
-`;
-export const HPBCBodyElement = styled.div`
-  width: 100%;
-  height: 78px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
   margin: 0;
   cursor: pointer;
 `;
@@ -189,3 +149,10 @@ export const HomePageBlockCentralElementRight = styled.div`
   justify-content: center;
   background-color: ${theme.colors.bgSecondary};
 `;
+
+export const ExpandIcon = styled(FontAwesomeIcon)`
+    margin-right: 20px;
+    &:hover{
+      opacity: 0.5;
+    }
+`
