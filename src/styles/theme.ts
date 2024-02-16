@@ -10,7 +10,8 @@ const mainPalette = {
   accentOne: "#3B8C6E",
   accentTwo: "#89D99D",
   accentBr: "#5aa882",
-  declineColor: "#ff0009"
+  declineColor: "#ff0009",
+  deleteColor: "#f44236"
 };
 
 const basicTheme: DefaultTheme = {

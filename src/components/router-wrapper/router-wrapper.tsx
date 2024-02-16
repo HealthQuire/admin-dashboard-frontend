@@ -6,7 +6,7 @@ import Header from "../header/header.tsx";
 
 export default function RouterWrapper() {
   return (
-    <RouterWrapperDiv className="aloo">
+    <RouterWrapperDiv>
         <Nav/>
         <BodyContainer>
             <Header/>
