@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAnglesRight, faHome } from '@fortawesome/free-solid-svg-icons'
-import { OptionContainers, OptionContainersSupport} from "./content.ts";
+import { OptionContainers} from "./content.ts";
 import {nanoid} from "@reduxjs/toolkit";
 
 import {
@@ -50,22 +50,6 @@ export default function Nav() {
                 </HeaderUnName>
                 <HeaderBox>
                     {OptionContainers.map(option =>
-                        <OptionContainer key={nanoid()} to={option.to}>
-                            <LeftWall/>
-                            <NonActiveZone>
-                                <OptionBody>
-                                    <FontAwesomeIcon style={optionIconStyle} icon={option.icon} />
-                                    <p>{option.text}</p>
-                                </OptionBody>
-                            </NonActiveZone>
-                        </OptionContainer>
-                    )}
-                </HeaderBox>
-                <HeaderUnName>
-                    SUPPORT
-                </HeaderUnName>
-                <HeaderBox>
-                    {OptionContainersSupport.map(option =>
                         <OptionContainer key={nanoid()} to={option.to}>
                             <LeftWall/>
                             <NonActiveZone>

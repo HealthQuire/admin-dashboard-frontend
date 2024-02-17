@@ -1,16 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import mainApi from "./api/main-api";
-import themeSlice from "./slices/theme-slice.ts";
+import { configureStore } from '@reduxjs/toolkit'
+import thunk from 'redux-thunk'
+
+const rootReducer = {
+
+}
 
 export const store = configureStore({
-    reducer: {
-        [mainApi.reducerPath]: mainApi.reducer,
-        [themeSlice.name]: themeSlice.reducer
-    },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(mainApi.middleware)
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 })
-
-export type TRootState = ReturnType<typeof store.getState>
-
-setupListeners(store.dispatch)

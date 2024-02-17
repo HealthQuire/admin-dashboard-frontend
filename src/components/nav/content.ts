@@ -4,7 +4,6 @@ import {
     faUsers,
     faCalendarCheck,
     faReceipt,
-    faFileCode,
 } from '@fortawesome/free-solid-svg-icons'
 
 export const OptionContainers = [
@@ -32,13 +31,5 @@ export const OptionContainers = [
         to: "/services",
         icon: faReceipt,
         text: "Services"
-    }
-];
-
-export const OptionContainersSupport = [
-    {
-        to: "/documentation",
-        icon: faFileCode,
-        text: "API Documentation"
     }
 ];

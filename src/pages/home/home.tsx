@@ -19,8 +19,6 @@ import HPBCBodyAppointmentsElement
     from "../../components/home-components/HPBC/Appointment/HPBCBodyAppointmentsElement.tsx";
 import HPBCBodyOrganizationsElement
     from "../../components/home-components/HPBC/Organization/HPBCBodyOrganizationsElement.tsx";
-import {Appointment} from "../../@types/Home/appointment.ts";
-import {Organization} from "../../@types/Home/organization.ts";
 
 import { HPBlocks } from "./content.ts";
 
@@ -35,6 +33,22 @@ import {useNavigate} from "react-router-dom";
 export default function Home() {
 
     const navigate = useNavigate();
+
+    interface Appointment {
+        id: string,
+        clientFullName: string,
+        serviceName: string,
+        dt: Date,
+        isConfirmed: boolean,
+        avatarUrl: string
+    }
+
+    interface Organization {
+        id: string,
+        name: string,
+        status: boolean,
+        avatarUrl: string
+    }
 
     const rA: Appointment[] = [
         {

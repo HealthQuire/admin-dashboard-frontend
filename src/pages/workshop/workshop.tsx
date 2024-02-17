@@ -6,29 +6,27 @@ import WorkshopHeader from "../../components/workshop-components/workshop-header
 import WorkshopList from "../../components/workshop-components/workshop-list";
 import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
-import {getDataByLocation} from "./getDataByLocation.ts";
+import {getGeneralDataByLocation} from "../../helpers/getGeneralDataByLocation.ts";
 
-export default function Workshop(){
+const Workshop = () => {
 
     const location = useLocation()
 
     const [initialData, setInitialData] = useState<[number, string][]>([]);
-
     const [data, setData] = useState<[number, string][]>([])
-
     const [searchRequest, setSearchRequest] = useState('')
 
     useEffect(() => {
-        setInitialData(getDataByLocation(location.pathname.split('/')[1]));
+        setInitialData(getGeneralDataByLocation(location.pathname.split('/')[1]))
     }, [location]);
 
     useEffect(() => {
-        setData(getDataByLocation(location.pathname.split('/')[1]))
+        setData(initialData)
     }, [initialData]);
 
     useEffect(() => {
         setData(initialData.filter(x => x[1].toLowerCase().includes(searchRequest.toLowerCase())));
-    }, [searchRequest]);
+    }, [initialData, searchRequest]);
 
     return(
         <WSPageWrapper>
@@ -37,3 +35,5 @@ export default function Workshop(){
         </WSPageWrapper>
     )
 }
+
+export default Workshop

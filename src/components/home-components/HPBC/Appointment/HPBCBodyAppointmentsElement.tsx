@@ -8,9 +8,17 @@ import {
     ButtonEdit,
     Confirmation
 } from "./styles.ts";
-import {Appointment} from "../../../../@types/Home/appointment.ts";
 import {nanoid} from "@reduxjs/toolkit";
 import theme from "../../../../styles/theme.ts";
+
+interface Appointment {
+    id: string,
+    clientFullName: string,
+    serviceName: string,
+    dt: Date,
+    isConfirmed: boolean,
+    avatarUrl: string
+}
 
 export default function HPBCBodyAppointmentsElement(element: Appointment) {
 

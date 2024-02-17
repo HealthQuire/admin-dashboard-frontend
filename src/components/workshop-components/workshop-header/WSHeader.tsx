@@ -10,7 +10,7 @@ export default function WorkshopHeader(request: string, setRequest: Dispatch<Set
     return(
         <WSHeaderWrapper>
             <InputField
-                        type="text"
+                        type="search"
                         value={request}
                         onChange={(e) => setRequest(e.target.value)}
                         placeholder='Search for entity name'

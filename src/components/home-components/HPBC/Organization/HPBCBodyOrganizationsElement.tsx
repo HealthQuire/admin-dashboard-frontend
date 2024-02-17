@@ -1,8 +1,14 @@
 import {HPBCBodyElement, UserImage, MainData, Txt, HPBCHeader} from "./styles.ts";
 import {nanoid} from "@reduxjs/toolkit";
-import {Organization} from "../../../../@types/Home/organization.ts";
 import theme from "../../../../styles/theme.ts";
 import {Confirmation} from "../Appointment/styles.ts";
+
+interface Organization {
+    id: string,
+    name: string,
+    status: boolean,
+    avatarUrl: string
+}
 
 export default function HPBCBodyOrganizationsElement(element: Organization) {
 
