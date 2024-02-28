@@ -3,7 +3,7 @@ import {
     faUserDoctor,
     faUsers,
     faCalendarCheck,
-    faReceipt,
+    faBriefcase
 } from '@fortawesome/free-solid-svg-icons'
 
 export const OptionContainers = [
@@ -11,6 +11,11 @@ export const OptionContainers = [
         to: "/organizations",
         icon: faHospital,
         text: "Organizations"
+    },
+    {
+        to: "/managers",
+        icon: faBriefcase,
+        text: "Managers"
     },
     {
         to: "/doctors",
@@ -26,10 +31,5 @@ export const OptionContainers = [
         to: "/appointments",
         icon: faCalendarCheck,
         text: "Appointments"
-    },
-    {
-        to: "/services",
-        icon: faReceipt,
-        text: "Services"
     }
 ];

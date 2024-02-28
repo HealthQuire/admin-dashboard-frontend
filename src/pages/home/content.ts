@@ -23,8 +23,8 @@ export const HPBlocks = [
             statuses: ["current", "past"]
         },
         {
-            text: "Services",
-            to: "/services",
+            text: "Managers",
+            to: "/managers",
             statuses: ["used", "unused"]
         }
     ]

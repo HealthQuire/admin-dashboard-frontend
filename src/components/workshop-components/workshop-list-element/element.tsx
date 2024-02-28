@@ -1,9 +1,19 @@
 import {ElementWrapper, ElementMain, ElementInteraction, ElementButton} from "./styles.ts";
-// import theme from "../../../styles/theme.ts";
-
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
+import {Dispatch, SetStateAction} from "react";
 
-export default function WorkshopListElement(element: [number, string]){
+interface IWorkshopListElement {
+    element: [number, string];
+    trigger: Dispatch<SetStateAction<boolean>>;
+    elementTrigger: Dispatch<SetStateAction<[number, string]>>
+}
+
+export default function WorkshopListElement({element, trigger, elementTrigger} : IWorkshopListElement){
+
+    const openModal = () => {
+        elementTrigger(element);
+        trigger(true);
+    }
 
     return(
         <ElementWrapper key={element[0]}>
@@ -12,8 +22,7 @@ export default function WorkshopListElement(element: [number, string]){
                 <p style={{marginLeft: '15px'}}>{element[1]}</p>
             </ElementMain>
             <ElementInteraction>
-                <ElementButton icon={faPencil} />
-                {/*<ElementButton icon={faTrashCan} style={{color: theme.colors.deleteColor, marginLeft: '15px'}} />*/}
+                <ElementButton onClick={() => openModal()} icon={faPencil} />
             </ElementInteraction>
         </ElementWrapper>
     )

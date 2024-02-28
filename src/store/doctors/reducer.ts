@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 export interface IInitialState {
-    entities: []
+    entities: [number, string][]
 }
 
 const initialState: IInitialState = {
@@ -15,12 +15,16 @@ const doctorsSlice = createSlice({
         setGeneralDoctors: (state, action: PayloadAction<IInitialState>) => {
             const { entities } = action.payload
             state.entities = entities
+        },
+        addDoctor: (state, action: PayloadAction<[number, string]>) => {
+            state.entities.push(action.payload)
         }
     }
 })
 
 export const {
-    setGeneralDoctors
+    setGeneralDoctors,
+    addDoctor
 } = doctorsSlice.actions
 
 export default doctorsSlice.reducer

@@ -5,7 +5,6 @@ import {
     MainData,
     Txt,
     AddData,
-    ButtonEdit,
     Confirmation
 } from "./styles.ts";
 import {nanoid} from "@reduxjs/toolkit";
@@ -36,7 +35,6 @@ export default function HPBCBodyAppointmentsElement(element: Appointment) {
                     backgroundColor: element.isConfirmed ? theme.colors.accentTwo : theme.colors.declineColor
                 }}/>
                 <Txt>{element.dt.toISOString().slice(0, 10)} {element.dt.getHours()}:{element.dt.getMinutes()}</Txt>
-                <ButtonEdit to={`/appointments/${element.id}`}>Edit</ButtonEdit>
             </AddData>
         </HPBCBodyElement>
     )

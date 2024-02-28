@@ -11,8 +11,8 @@ export const getEntitiesFromSelectorByLocation = (state: RootState, location: st
             return state.clients.entities
         case "appointments":
             return state.appointments.entities
-        case "services":
-            return state.services.entities
+        case "managers":
+            return state.managers.entities
         default:
             return []
     }

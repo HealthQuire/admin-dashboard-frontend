@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 export interface IInitialState {
-    entities: []
+    entities: [number, string][]
 }
 
 const initialState: IInitialState = {
@@ -15,12 +15,16 @@ const appointmentsSlice = createSlice({
         setGeneralAppointments: (state, action: PayloadAction<IInitialState>) => {
             const { entities } = action.payload
             state.entities = entities
+        },
+        addAppointment: (state, action: PayloadAction<[number, string]>) => {
+            state.entities.push(action.payload)
         }
     }
 })
 
 export const {
-    setGeneralAppointments
+    setGeneralAppointments,
+    addAppointment
 } = appointmentsSlice.actions
 
 export default appointmentsSlice.reducer

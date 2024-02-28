@@ -30,9 +30,13 @@ const Workshop = () => {
         if (entities.length > 0) setData(entities)
     }, [entities, location]);
 
+    useEffect(() => {
+        setSearchRequest("")
+    }, [location]);
+
     return(
         <WSPageWrapper>
-            {WorkshopHeader(searchRequest, setSearchRequest)}
+            {WorkshopHeader(location, searchRequest, setSearchRequest)}
             {WorkshopList(data)}
         </WSPageWrapper>
     )

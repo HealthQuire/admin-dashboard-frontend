@@ -9,8 +9,7 @@ const title: { [name: string]: string } = {
     "doctors": "Doctors",
     "clients": "Clients",
     "appointments": "Appointments",
-    "services": "Services",
-    "documentation": "API Documentation",
+    "managers": "Managers"
 };
 
 export default function Header() {

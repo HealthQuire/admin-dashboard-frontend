@@ -85,8 +85,8 @@ export default function Home() {
         },
         {
             id: "5",
-            clientFullName: "Tazeev Almaz",
-            serviceName: "Head check",
+            clientFullName: "Ivanov Ivan",
+            serviceName: "Ear check",
             dt: new Date(),
             isConfirmed: false,
             avatarUrl: "/userDefault.avif"
@@ -178,7 +178,7 @@ export default function Home() {
               <HomePageBlockCentralElementRight>
                   <HPBCHeader>
                       <HPBHeaderText>
-                          Most popular organizations
+                          Recent organizations
                       </HPBHeaderText>
                       <ExpandIcon onClick={() => navigate("/organizations")} icon={faExpand}/>
                   </HPBCHeader>
