@@ -1,16 +1,26 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import mainApi from "./api/main-api";
-import themeSlice from "./slices/theme-slice.ts";
+import { configureStore } from '@reduxjs/toolkit'
 
-export const store = configureStore({
+import organizationsSlice from './organizations/reducer'
+import doctorsSlice from './doctors/reducer.ts'
+import clientsSlice from './clients/reducer.ts'
+import appointmentsSlice from './appointments/reducer.ts'
+import managersSlice from './managers/reducer.ts'
+
+const store = configureStore({
     reducer: {
-        [mainApi.reducerPath]: mainApi.reducer,
-        [themeSlice.name]: themeSlice.reducer
+        organizations: organizationsSlice,
+        doctors: doctorsSlice,
+        clients: clientsSlice,
+        appointments: appointmentsSlice,
+        managers: managersSlice
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(mainApi.middleware)
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false
+        })
 })
 
-export type TRootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>
+// export type AppDispatch = typeof store.dispatch
 
-setupListeners(store.dispatch)
+export default store

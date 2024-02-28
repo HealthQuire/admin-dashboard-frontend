@@ -1,18 +1,21 @@
 import { DefaultTheme } from "styled-components";
 
 const mainPalette = {
-  bgPrimary: "#111111",
-  bgSecondary: "#1D1D20",
+  bgPrimary: "#1D1D20",
+  bgSecondary: "#323437",
+  bgPads: "#4d5052",
+  br: "#2b2c2f",
   textPrimary: "#FFFFFF",
-  textSecondary: "#AAAAAA",
-  accentOne: "#9486FC",
-  accentTwo: "#E186FC",
-  accentThree: "#86C3FC",
-  transparent: (value: number) => `rgba(0, 0, 0, ${ value })`
+  textSecondary: "#E7EAEC",
+  accentOne: "#3B8C6E",
+  accentTwo: "#89D99D",
+  accentBr: "#5aa882",
+  declineColor: "#ff0009",
+  deleteColor: "#f44236"
 };
 
 const basicTheme: DefaultTheme = {
   colors: mainPalette,
 };
-а
+
 export default basicTheme;
