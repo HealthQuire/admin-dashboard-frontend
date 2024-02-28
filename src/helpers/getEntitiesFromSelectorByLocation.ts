@@ -17,3 +17,21 @@ export const getEntitiesFromSelectorByLocation = (state: RootState, location: st
             return []
     }
 }
+
+export const getEntitiesInitFromSelectorByLocation = (state: RootState, location: string) : boolean => {
+
+    switch (location){
+        case "organizations":
+            return state.organizations.init
+        case "doctors":
+            return state.doctors.init
+        case "clients":
+            return state.clients.init
+        case "appointments":
+            return state.appointments.init
+        case "managers":
+            return state.managers.init
+        default:
+            return true
+    }
+}

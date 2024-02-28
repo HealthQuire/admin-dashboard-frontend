@@ -7,9 +7,7 @@ import {setGeneralAppointments} from "../store/appointments/reducer.ts";
 import {setGeneralClients} from "../store/clients/reducer.ts";
 import {setGeneralManagers} from "../store/managers/reducer.ts";
 
-export const getGeneralDataByLocation = (dispatch: Dispatch<AnyAction>, location: string) : [number, string][] => {
-
-    let result: [] = [];
+export const getGeneralDataByLocation = (dispatch: Dispatch<AnyAction>, location: string) : void => {
 
     app.get(`/${location}`)
         .then(res => {
@@ -17,24 +15,21 @@ export const getGeneralDataByLocation = (dispatch: Dispatch<AnyAction>, location
 
                 switch (location){
                     case "organizations":
-                        dispatch(setGeneralOrganizations({entities: res.data}))
+                        dispatch(setGeneralOrganizations(res.data))
                         break
                     case "doctors":
-                        dispatch(setGeneralDoctors({entities: res.data}))
+                        dispatch(setGeneralDoctors(res.data))
                         break
                     case "clients":
-                        dispatch(setGeneralClients({entities: res.data}))
+                        dispatch(setGeneralClients(res.data))
                         break
                     case "appointments":
-                        dispatch(setGeneralAppointments({entities: res.data}))
+                        dispatch(setGeneralAppointments(res.data))
                         break
                     case "managers":
-                        dispatch(setGeneralManagers({entities: res.data}))
+                        dispatch(setGeneralManagers(res.data))
                         break
                 }
-                result = res.data
             }
         })
-
-    return result
 }

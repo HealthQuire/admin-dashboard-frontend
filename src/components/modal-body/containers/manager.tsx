@@ -1,5 +1,5 @@
 import ModalField from "../modal-field.tsx";
-import {ModalButton} from "../styles.ts";
+import {ButtonContainer, ModalButton} from "../styles.ts";
 import {Dispatch, SetStateAction, useState} from "react";
 import theme from "../../../styles/theme.ts";
 import {app} from "../../../lib/axios.ts";
@@ -7,7 +7,12 @@ import {useDispatch} from "react-redux";
 import {addManager} from "../../../store/managers/reducer.ts";
 
 
-const CreateManager = (responseStatus: string, setResponseStatus: Dispatch<SetStateAction<string>>) => {
+const Manager  = (
+    responseStatus: string,
+    setResponseStatus: Dispatch<SetStateAction<string>>,
+    setModalOpened: Dispatch<SetStateAction<boolean>>,
+    onEdit: boolean = false,
+    editId: number = 0) => {
 
     const dispatch = useDispatch();
 
@@ -56,12 +61,27 @@ const CreateManager = (responseStatus: string, setResponseStatus: Dispatch<SetSt
             {ModalField("First name", firstName, setFirstName)}
             {ModalField("Last Name", lastName, setLastName)}
             {ModalField("Father Name", fatherName, setFatherName)}
-            <ModalButton onClick={() => create()}>Create</ModalButton>
-            <p style={{color: responseStatus == "ok" ? theme.colors.accentTwo : theme.colors.declineColor}}>
-                {responseStatus}
-            </p>
+            {
+                onEdit ?
+                    <ButtonContainer>
+                        <ModalButton onClick={() => edit()}>Edit</ModalButton>
+                        <ModalButton style={{backgroundColor: theme.colors.declineColor}} onClick={() => remove()}>
+                            Delete
+                        </ModalButton>
+                    </ButtonContainer>
+                    :
+                    <ModalButton onClick={() => create()}>Create</ModalButton>
+            }
+            {
+                responseStatus == "ok" || responseStatus == "error" ?
+                    <p style={{color: responseStatus == "ok" ? theme.colors.accentTwo : theme.colors.deleteColor}}>
+                        {responseStatus}
+                    </p>
+                    :
+                    null
+            }
         </div>
     )
 }
 
-export default CreateManager
+export default Manager
