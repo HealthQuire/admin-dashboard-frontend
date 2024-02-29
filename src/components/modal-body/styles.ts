@@ -16,6 +16,14 @@ export const InputField = styled.input`
   }
 `;
 
+export const ButtonContainer = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 export const ModalButton = styled.div`
   font-size: 16px;
   color: ${theme.colors.textPrimary};
@@ -26,6 +34,6 @@ export const ModalButton = styled.div`
   margin-top: 30px;
   
   &:hover{
-    opacity: 0.3;
+    opacity: 0.5;
   }
 `;

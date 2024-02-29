@@ -6,35 +6,70 @@ import {setGeneralDoctors} from "../store/doctors/reducer.ts";
 import {setGeneralAppointments} from "../store/appointments/reducer.ts";
 import {setGeneralClients} from "../store/clients/reducer.ts";
 import {setGeneralManagers} from "../store/managers/reducer.ts";
+import {IOrganization} from "../@types/entities/organization.ts";
+import {IShortEntity} from "../@types/shortEntity.ts";
+import {IDoctor} from "../@types/entities/doctor.ts";
+import {IClient} from "../@types/entities/client.ts";
+import {IAppointment} from "../@types/entities/appointment.ts";
+import {IManager} from "../@types/entities/manager.ts";
 
-export const getGeneralDataByLocation = (dispatch: Dispatch<AnyAction>, location: string) : [number, string][] => {
-
-    let result: [] = [];
-
+export const getGeneralDataByLocation = (dispatch: Dispatch<AnyAction>, location: string) : void => {
     app.get(`/${location}`)
         .then(res => {
             if (res.status === 200){
-
+                let data = []
                 switch (location){
                     case "organizations":
-                        dispatch(setGeneralOrganizations({entities: res.data}))
+                        data = res.data.map((x: IOrganization) => {
+                            const entity: IShortEntity = {
+                                id: x.id,
+                                name: x.name
+                            }
+                            return entity
+                        })
+                        dispatch(setGeneralOrganizations(data))
                         break
                     case "doctors":
-                        dispatch(setGeneralDoctors({entities: res.data}))
+                        data = res.data.map((x: IDoctor) => {
+                            const entity: IShortEntity = {
+                                id: x.id,
+                                name: x.lastName
+                            }
+                            return entity
+                        })
+                        dispatch(setGeneralDoctors(data))
                         break
                     case "clients":
-                        dispatch(setGeneralClients({entities: res.data}))
+                        data = res.data.map((x: IClient) => {
+                            const entity: IShortEntity = {
+                                id: x.id,
+                                name: x.lastName
+                            }
+                            return entity
+                        })
+                        dispatch(setGeneralClients(data))
                         break
                     case "appointments":
-                        dispatch(setGeneralAppointments({entities: res.data}))
+                        data = res.data.map((x: IAppointment) => {
+                            const entity: IShortEntity = {
+                                id: x.id,
+                                name: `Time cell - ${x.timeCellId}`
+                            }
+                            return entity
+                        })
+                        dispatch(setGeneralAppointments(data))
                         break
                     case "managers":
-                        dispatch(setGeneralManagers({entities: res.data}))
+                        data = res.data.map((x: IManager) => {
+                            const entity: IShortEntity = {
+                                id: x.id,
+                                name: x.lastName
+                            }
+                            return entity
+                        })
+                        dispatch(setGeneralManagers(data))
                         break
                 }
-                result = res.data
             }
         })
-
-    return result
 }

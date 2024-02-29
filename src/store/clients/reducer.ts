@@ -1,30 +1,44 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import {IShortEntity} from "../../@types/shortEntity.ts";
 
 export interface IInitialState {
-    entities: [number, string][]
+    entities: IShortEntity[],
+    init: boolean
 }
 
 const initialState: IInitialState = {
-    entities: []
+    entities: [],
+    init: false
 }
 
 const clientsSlice = createSlice({
     name: 'clients',
     initialState,
     reducers: {
-        setGeneralClients: (state, action: PayloadAction<IInitialState>) => {
-            const { entities } = action.payload
-            state.entities = entities
+        setGeneralClients: (state, action: PayloadAction<IShortEntity[]>) => {
+            state.entities = action.payload
+            state.init = true
         },
-        addClient: (state, action: PayloadAction<[number, string]>) => {
+        addClient: (state, action: PayloadAction<IShortEntity>) => {
             state.entities.push(action.payload)
-        }
+        },
+        editClient: (state, action: PayloadAction<IShortEntity>) => {
+            state.entities = state.entities.map(x =>
+                x.id == action.payload.id ? action.payload : x)
+        },
+        deleteClient: (state, action: PayloadAction<number>) => {
+            const ind = state.entities.findIndex(x =>
+                x.id == action.payload)
+            state.entities.splice(ind, 1)
+        },
     }
 })
 
 export const {
     setGeneralClients,
-    addClient
+    addClient,
+    editClient,
+    deleteClient
 } = clientsSlice.actions
 
 export default clientsSlice.reducer
