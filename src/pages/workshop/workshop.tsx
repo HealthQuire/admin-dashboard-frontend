@@ -13,6 +13,7 @@ import {
     getEntitiesFromSelectorByLocation,
     getEntitiesInitFromSelectorByLocation
 } from "../../helpers/getEntitiesFromSelectorByLocation.ts";
+import {IShortEntity} from "../../@types/shortEntity.ts";
 
 const Workshop = () => {
 
@@ -23,19 +24,19 @@ const Workshop = () => {
     const entitiesInit = useTypedSelector(state =>
         getEntitiesInitFromSelectorByLocation(state, location))
 
-    const [data, setData] = useState<[number, string][]>([])
-    const [searchRequest, setSearchRequest] = useState<string>('')
+    const [data, setData] = useState<IShortEntity[]>([])
+    const [searchRequest, setSearchRequest] = useState<string>("")
 
     useEffect(() => {
-        setData(entities.filter(x => x[1].toLowerCase().includes(searchRequest.toLowerCase())));
-    }, [searchRequest]);
+        setData(entities.filter(x => x.name.toLowerCase().includes(searchRequest.toLowerCase())));
+    }, [entities, searchRequest]);
 
     useEffect(() => {
         if (!entitiesInit){
             getGeneralDataByLocation(dispatch, location)
         }
         setData(entities)
-    }, [dispatch, entities, location]);
+    }, [entitiesInit, entities, location, dispatch]);
 
     useEffect(() => {
         setSearchRequest("")

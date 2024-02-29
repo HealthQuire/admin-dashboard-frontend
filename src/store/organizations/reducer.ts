@@ -1,7 +1,8 @@
 import {createSlice, type PayloadAction} from '@reduxjs/toolkit'
+import {IShortEntity} from "../../@types/shortEntity.ts";
 
 export interface IInitialState {
-    entities: [number, string][],
+    entities: IShortEntity[],
     init: boolean
 }
 
@@ -14,21 +15,21 @@ const organizationsSlice = createSlice({
     name: 'organizations',
     initialState,
     reducers: {
-        setGeneralOrganizations: (state, action: PayloadAction<[number, string][]>) => {
+        setGeneralOrganizations: (state, action: PayloadAction<IShortEntity[]>) => {
             state.entities = action.payload
             state.init = true
         },
-        addOrganization: (state, action: PayloadAction<[number, string]>) => {
+        addOrganization: (state, action: PayloadAction<IShortEntity>) => {
             state.entities.push(action.payload)
         },
-        editOrganization: (state, action: PayloadAction<[number, string]>) => {
-            state.entities = state.entities.map(x => x[0] == action.payload[0] ? action.payload : x)
+        editOrganization: (state, action: PayloadAction<IShortEntity>) => {
+            state.entities = state.entities.map(x =>
+                x.id == action.payload.id ? action.payload : x)
         },
         deleteOrganization: (state, action: PayloadAction<number>) => {
-            const ind = state.entities.findIndex(x => x[0] == action.payload)
+            const ind = state.entities.findIndex(x =>
+                x.id == action.payload)
             state.entities.splice(ind, 1)
-            if (state.entities.length == 0)
-            console.log(state.entities)
         },
     }
 })

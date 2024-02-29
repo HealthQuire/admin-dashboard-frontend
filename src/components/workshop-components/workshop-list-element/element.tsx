@@ -1,11 +1,12 @@
 import {ElementWrapper, ElementMain, ElementInteraction, ElementButton} from "./styles.ts";
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import {Dispatch, SetStateAction} from "react";
+import {IShortEntity} from "../../../@types/shortEntity.ts";
 
 interface IWorkshopListElement {
-    element: [number, string];
+    element: IShortEntity;
     trigger: Dispatch<SetStateAction<boolean>>;
-    elementTrigger: Dispatch<SetStateAction<[number, string]>>
+    elementTrigger: Dispatch<SetStateAction<IShortEntity>>
 }
 
 export default function WorkshopListElement({element, trigger, elementTrigger} : IWorkshopListElement){
@@ -16,10 +17,10 @@ export default function WorkshopListElement({element, trigger, elementTrigger} :
     }
 
     return(
-        <ElementWrapper key={element[0]}>
+        <ElementWrapper key={element.id}>
             <ElementMain>
-                <p>{element[0]}</p>
-                <p style={{marginLeft: '15px'}}>{element[1]}</p>
+                <p>{element.id}</p>
+                <p style={{marginLeft: '15px'}}>{element.name}</p>
             </ElementMain>
             <ElementInteraction>
                 <ElementButton onClick={() => openModal()} icon={faPencil} />

@@ -1,10 +1,13 @@
 import ModalField from "../modal-field.tsx";
 import {ButtonContainer, ModalButton} from "../styles.ts";
-import {Dispatch, SetStateAction    , useState} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import theme from "../../../styles/theme.ts";
 import {app} from "../../../lib/axios.ts";
 import {addOrganization, deleteOrganization, editOrganization} from "../../../store/organizations/reducer.ts";
 import {useDispatch} from "react-redux";
+import {INewOrganization, initOrganization, IOrganization} from "../../../@types/entities/organization.ts";
+import {organizationSchema} from "../../../schemas/organizationSchema.ts";
+import {IShortEntity} from "../../../@types/shortEntity.ts";
 
 
 const Organization = (
@@ -12,65 +15,98 @@ const Organization = (
     setResponseStatus: Dispatch<SetStateAction<string>>,
     setModalOpened: Dispatch<SetStateAction<boolean>>,
     onEdit: boolean = false,
-    editId: number = 0) => {
+    editElement: IOrganization = initOrganization) => {
 
     const dispatch = useDispatch();
 
-    const [ownerId, setOwnerId] = useState<string>("")
-    const [name, setName] = useState<string>("")
-    const [status, setStatus] = useState<string>("")
+    const [ownerId, setOwnerId] = useState<string>(initOrganization.ownerId)
+    const [name, setName] = useState<string>(initOrganization.name)
+    const [status, setStatus] = useState<string>(initOrganization.status)
 
-    const create = () => {
-        app.post("/organizations", {ownerId, name, status})
+
+    const resetForm = () => {
+        setName("")
+        setStatus("")
+        setOwnerId("")
+    }
+
+    const buildObject = () => {
+        const obj: INewOrganization = {
+            ownerId: ownerId,
+            name: name,
+            status: status
+        };
+        return obj
+    }
+
+    const create = async () => {
+        const validObj = await organizationSchema
+            .validate(buildObject())
+            .catch(err => {
+                setResponseStatus(err.message)
+            })
+        if (!validObj) return
+
+        app.post("/organizations", validObj)
             .then(res => {
                 if (res.status === 200){
-                    dispatch(addOrganization(res.data))
-                    setName("")
-                    setStatus("")
-                    setOwnerId("")
-                    setResponseStatus("ok")
+                    const shortEntity: IShortEntity = {
+                        id: res.data.id,
+                        name: res.data.name
+                    }
+                    dispatch(addOrganization(shortEntity))
+                    setResponseStatus("success")
+                    resetForm()
                 }
             })
             .catch(() => {
-                setResponseStatus("error")
+                setResponseStatus("server error")
             })
     }
 
-    const edit = () => {
-        app.patch(`/organizations/${editId}`, {ownerId, name, status})
+    const edit = async () => {
+        const validObj = await organizationSchema
+            .validate(buildObject())
+            .catch(err => {
+                setResponseStatus(err.message)
+            })
+        if (!validObj) return
+
+        app.patch(`/organizations/${editElement.id}`, validObj)
             .then(res => {
                 if (res.status === 200){
-                    dispatch(editOrganization(res.data))
-                    setName("")
-                    setStatus("")
-                    setOwnerId("")
-                    setResponseStatus("ok")
+                    const shortEntity: IShortEntity = {
+                        id: res.data.id,
+                        name: res.data.name
+                    }
+                    dispatch(editOrganization(shortEntity))
+                    setResponseStatus("success")
+                    resetForm()
                 }
             })
             .catch(() => {
-                setResponseStatus("error")
+                setResponseStatus("server error")
             })
     }
 
     const remove = () => {
-        if (window.confirm('Are you sure?'))
-        {
-            app.delete(`/organizations/${editId}`)
-                .then(res => {
-                    if (res.status === 200){
-                        dispatch(deleteOrganization(editId))
-                        setModalOpened(false)
-                    }
-                })
-            return
-        }
+        if (!window.confirm(`Are you sure you want to delete (id=${editElement.id}) object?`)) { return }
+
+        app.delete(`/organizations/${editElement.id}`)
+            .then(res => {
+                if (res.status === 200){
+                    dispatch(deleteOrganization(editElement.id))
+                    setModalOpened(false)
+                    resetForm()
+                }
+            })
     }
 
     return(
         <div>
-            {ModalField("Owner Id", ownerId, setOwnerId)}
-            {ModalField("Name", name, setName)}
-            {ModalField("Status", status, setStatus)}
+            {ModalField("Owner Id", ownerId, setOwnerId, editElement.ownerId)}
+            {ModalField("Name", name, setName, editElement.name)}
+            {ModalField("Status", status, setStatus, editElement.status)}
             {
             onEdit ?
                 <ButtonContainer>
@@ -83,8 +119,8 @@ const Organization = (
                 <ModalButton onClick={() => create()}>Create</ModalButton>
             }
             {
-            responseStatus == "ok" || responseStatus == "error" ?
-                <p style={{color: responseStatus == "ok" ? theme.colors.accentTwo : theme.colors.deleteColor}}>
+            responseStatus != "" ?
+                <p style={{color: responseStatus == "success" ? theme.colors.accentTwo : theme.colors.deleteColor}}>
                     {responseStatus}
                 </p>
             :

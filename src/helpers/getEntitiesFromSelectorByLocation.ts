@@ -1,6 +1,7 @@
 import {RootState} from "../store/store.ts";
+import {IShortEntity} from "../@types/shortEntity.ts";
 
-export const getEntitiesFromSelectorByLocation = (state: RootState, location: string) : [number, string][] => {
+export const getEntitiesFromSelectorByLocation = (state: RootState, location: string) : IShortEntity[] => {
 
     switch (location){
         case "organizations":
