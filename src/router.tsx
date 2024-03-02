@@ -4,7 +4,6 @@ import Home from "./pages/home"
 import Workshop from "./pages/workshop";
 import Login from "./pages/login";
 
-
 const router = createBrowserRouter([
     {
         path: "/login",
@@ -15,7 +14,7 @@ const router = createBrowserRouter([
         element: <RouterWrapper />,
         children: [
             {
-                path: "",
+                path: "/",
                 element: <Home />
             },
             {
@@ -37,10 +36,6 @@ const router = createBrowserRouter([
             {
                 path: "managers",
                 element: <Workshop />
-            },
-            {
-                path: "documentation",
-                element: "Sorry... Not implemented yet"
             }
         ]
     }

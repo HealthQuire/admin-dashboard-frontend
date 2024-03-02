@@ -1,6 +1,6 @@
 import ModalField from "../modal-field.tsx";
 import {ButtonContainer, ModalButton} from "../styles.ts";
-import {Dispatch, SetStateAction, useState} from "react";
+import {Dispatch, SetStateAction, useRef} from "react";
 import theme from "../../../styles/theme.ts";
 import {app} from "../../../lib/axios.ts";
 import {useDispatch} from "react-redux";
@@ -18,40 +18,27 @@ const Manager  = (
 
     const dispatch = useDispatch();
 
-    const [email, setEmail] = useState<string>(initManager.email)
-    const [password, setPassword] = useState<string>(initManager.password)
-    const [role, setRole] = useState<string>(initManager.role)
-    const [phone, setPhone] = useState<string>(initManager.phone)
-    const [status, setStatus] = useState<string>(initManager.status)
-
-    const [medCentreId, setMedCentreId] = useState<string>(initManager.medCentreId)
-    const [firstName, setFirstName] = useState<string>(initManager.firstName)
-    const [lastName, setLastName] = useState<string>(initManager.lastName)
-    const [fatherName, setFatherName] = useState<string>(initManager.fatherName)
-
-    const resetForm = () => {
-        setFirstName("")
-        setLastName("")
-        setFatherName("")
-        setPhone("")
-        setEmail("")
-        setPassword("")
-        setMedCentreId("")
-        setStatus("")
-        setRole("")
-    }
+    const email = useRef<HTMLInputElement>(null);
+    const password = useRef<HTMLInputElement>(null);
+    const role = useRef<HTMLInputElement>(null);
+    const phone = useRef<HTMLInputElement>(null);
+    const status = useRef<HTMLInputElement>(null);
+    const medCentreId = useRef<HTMLInputElement>(null);
+    const firstName = useRef<HTMLInputElement>(null);
+    const lastName = useRef<HTMLInputElement>(null);
+    const fatherName = useRef<HTMLInputElement>(null);
 
     const buildObject = () => {
         const obj: INewManager = {
-            email: email,
-            password: password,
-            role: role,
-            phone: phone,
-            status: status,
-            medCentreId: medCentreId,
-            firstName: firstName,
-            lastName: lastName,
-            fatherName: fatherName,
+            email: email.current ? email.current.value : "",
+            password: password.current ? password.current.value : "",
+            role: role.current ? role.current.value : "",
+            phone: phone.current ? phone.current.value : "",
+            medCentreId: medCentreId.current ? medCentreId.current.value : "",
+            status: status.current ? status.current.value : "",
+            firstName: firstName.current ? firstName.current.value : "",
+            lastName: lastName.current ? lastName.current.value : "",
+            fatherName: fatherName.current ? fatherName.current.value : "",
         };
         return obj
     }
@@ -73,7 +60,6 @@ const Manager  = (
                     }
                     dispatch(addManager(shortEntity))
                     setResponseStatus("success")
-                    resetForm()
                 }
             })
             .catch(() => {
@@ -98,7 +84,6 @@ const Manager  = (
                     }
                     dispatch(editManager(shortEntity))
                     setResponseStatus("success")
-                    resetForm()
                 }
             })
             .catch(() => {
@@ -114,22 +99,21 @@ const Manager  = (
                 if (res.status === 200){
                     dispatch(deleteManager(editElement.id))
                     setModalOpened(false)
-                    resetForm()
                 }
             })
     }
 
     return(
         <div>
-            {ModalField("Email", email, setEmail, editElement.email)}
-            {ModalField("Password", password, setPassword, editElement.password)}
-            {ModalField("Role", role, setRole, editElement.role)}
-            {ModalField("Phone Number", phone, setPhone, editElement.phone)}
-            {ModalField("Status", status, setStatus, editElement.status)}
-            {ModalField("Med centre id", medCentreId, setMedCentreId, editElement.medCentreId)}
-            {ModalField("First name", firstName, setFirstName, editElement.firstName)}
-            {ModalField("Last Name", lastName, setLastName, editElement.lastName)}
-            {ModalField("Father Name", fatherName, setFatherName, editElement.fatherName)}
+            {ModalField("Email", email, editElement.email)}
+            {ModalField("Password", password, editElement.password)}
+            {ModalField("Role", role, editElement.role)}
+            {ModalField("Phone Number", phone, editElement.phone)}
+            {ModalField("Status", status, editElement.status)}
+            {ModalField("Med centre id", medCentreId, editElement.medCentreId)}
+            {ModalField("First name", firstName, editElement.firstName)}
+            {ModalField("Last Name", lastName, editElement.lastName)}
+            {ModalField("Father Name", fatherName, editElement.fatherName)}
             {
                 onEdit ?
                     <ButtonContainer>

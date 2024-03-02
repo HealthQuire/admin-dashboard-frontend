@@ -1,6 +1,6 @@
 import ModalField from "../modal-field.tsx";
 import {ButtonContainer, ModalButton} from "../styles.ts";
-import {Dispatch, SetStateAction, useState} from "react";
+import {Dispatch, SetStateAction, useRef} from "react";
 import theme from "../../../styles/theme.ts";
 import {app} from "../../../lib/axios.ts";
 import {useDispatch} from "react-redux";
@@ -18,49 +18,33 @@ const Doctor  = (
 
     const dispatch = useDispatch();
 
-    const [email, setEmail] = useState<string>(initDoctor.email)
-    const [password, setPassword] = useState<string>(initDoctor.password)
-    const [phone, setPhone] = useState<string>(initDoctor.phone)
-    const [status, setStatus] = useState<string>(initDoctor.status)
-
-    const [medCentreId, setMedCentreId] = useState<string>(initDoctor.medCentreId)
-    const [firstName, setFirstName] = useState<string>(initDoctor.firstName)
-    const [lastName, setLastName] = useState<string>(initDoctor.lastName)
-    const [fatherName, setFatherName] = useState<string>(initDoctor.fatherName)
-    const [age, setAge] = useState<string>(initDoctor.age)
-    const [yearStarted, setYearStarted] = useState<string>(initDoctor.yearStarted)
-    const [medService, setMedService] = useState<string>(initDoctor.medService)
-    const [description, setDescription] = useState<string>(initDoctor.description)
-
-    const resetForm = () => {
-        setFirstName("")
-        setLastName("")
-        setFatherName("")
-        setPhone("")
-        setEmail("")
-        setPassword("")
-        setMedCentreId("")
-        setStatus("")
-        setAge("")
-        setYearStarted("")
-        setMedService("")
-        setDescription("")
-    }
+    const email = useRef<HTMLInputElement>(null);
+    const password = useRef<HTMLInputElement>(null);
+    const phone = useRef<HTMLInputElement>(null);
+    const status = useRef<HTMLInputElement>(null);
+    const medCentreId = useRef<HTMLInputElement>(null);
+    const firstName = useRef<HTMLInputElement>(null);
+    const lastName = useRef<HTMLInputElement>(null);
+    const fatherName = useRef<HTMLInputElement>(null);
+    const age = useRef<HTMLInputElement>(null);
+    const yearStarted = useRef<HTMLInputElement>(null);
+    const medService = useRef<HTMLInputElement>(null);
+    const description = useRef<HTMLInputElement>(null);
 
     const buildObject = () => {
         const obj: INewDoctor = {
-            email: email,
-            password: password,
-            phone: phone,
-            status: status,
-            medCentreId: medCentreId,
-            firstName: firstName,
-            lastName: lastName,
-            fatherName: fatherName,
-            age: age,
-            yearStarted: yearStarted,
-            medService: medService,
-            description: description,
+            email: email.current ? email.current.value : "",
+            password: password.current ? password.current.value : "",
+            phone: phone.current ? phone.current.value : "",
+            medCentreId: medCentreId.current ? medCentreId.current.value : "",
+            status: status.current ? status.current.value : "",
+            firstName: firstName.current ? firstName.current.value : "",
+            lastName: lastName.current ? lastName.current.value : "",
+            fatherName: fatherName.current ? fatherName.current.value : "",
+            age: age.current ? age.current.value : "",
+            yearStarted: yearStarted.current ? yearStarted.current.value : "",
+            medService: medService.current ? medService.current.value : "",
+            description: description.current ? description.current.value : ""
         };
         return obj
     }
@@ -83,7 +67,6 @@ const Doctor  = (
                     }
                     dispatch(addDoctor(shortEntity))
                     setResponseStatus("success")
-                    resetForm()
                 }
             })
             .catch(() => {
@@ -108,7 +91,6 @@ const Doctor  = (
                     }
                     dispatch(editDoctor(shortEntity))
                     setResponseStatus("success")
-                    resetForm()
                 }
             })
             .catch(() => {
@@ -124,25 +106,24 @@ const Doctor  = (
                 if (res.status === 200){
                     dispatch(deleteDoctor(editElement.id))
                     setModalOpened(false)
-                    resetForm()
                 }
             })
     }
 
     return(
         <div>
-            {ModalField("Email", email, setEmail, editElement.email)}
-            {ModalField("Password", password, setPassword, editElement.password)}
-            {ModalField("Phone Number", phone, setPhone, editElement.phone)}
-            {ModalField("Status", status, setStatus, editElement.status)}
-            {ModalField("Med centre id", medCentreId, setMedCentreId, editElement.medCentreId)}
-            {ModalField("First name", firstName, setFirstName, editElement.firstName)}
-            {ModalField("Last Name", lastName, setLastName, editElement.lastName)}
-            {ModalField("Father Name", fatherName, setFatherName, editElement.fatherName)}
-            {ModalField("Age", age, setAge, editElement.age)}
-            {ModalField("Year started", yearStarted, setYearStarted, editElement.yearStarted)}
-            {ModalField("Med service", medService, setMedService, editElement.medService)}
-            {ModalField("Description", description, setDescription, editElement.description)}
+            {ModalField("Email", email, editElement.email)}
+            {ModalField("Password", password, editElement.password)}
+            {ModalField("Phone Number", phone, editElement.phone)}
+            {ModalField("Status", status, editElement.status)}
+            {ModalField("Med centre id", medCentreId, editElement.medCentreId)}
+            {ModalField("First name", firstName, editElement.firstName)}
+            {ModalField("Last Name", lastName, editElement.lastName)}
+            {ModalField("Father Name", fatherName, editElement.fatherName)}
+            {ModalField("Age", age, editElement.age)}
+            {ModalField("Year started", yearStarted, editElement.yearStarted)}
+            {ModalField("Med service", medService, editElement.medService)}
+            {ModalField("Description", description, editElement.description)}
             {
                 onEdit ?
                     <ButtonContainer>

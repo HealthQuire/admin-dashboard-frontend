@@ -1,6 +1,6 @@
 import ModalField from "../modal-field.tsx";
 import {ButtonContainer, ModalButton} from "../styles.ts";
-import {Dispatch, SetStateAction, useState} from "react";
+import {Dispatch, SetStateAction, useRef} from "react";
 import theme from "../../../styles/theme.ts";
 import {app} from "../../../lib/axios.ts";
 import {useDispatch} from "react-redux";
@@ -18,18 +18,13 @@ const Appointment  = (
 
     const dispatch = useDispatch();
 
-    const [timeCellId, setTimeCellId] = useState<string>(initAppointment.timeCellId)
-    const [description, setDescription] = useState<string>(initAppointment.description)
-
-    const resetForm = () => {
-        setDescription("")
-        setTimeCellId("")
-    }
+    const timeCellId = useRef<HTMLInputElement>(null);
+    const description = useRef<HTMLInputElement>(null);
 
     const buildObject = () => {
         const obj: INewAppointment = {
-            timeCellId: timeCellId,
-            description: description
+            timeCellId: timeCellId.current ? timeCellId.current.value : "",
+            description: description.current ? description.current.value : "",
         };
         return obj
     }
@@ -52,7 +47,6 @@ const Appointment  = (
                     }
                     dispatch(addAppointment(shortEntity))
                     setResponseStatus("success")
-                    resetForm()
                 }
             })
             .catch(() => {
@@ -77,7 +71,6 @@ const Appointment  = (
                     }
                     dispatch(editAppointment(shortEntity))
                     setResponseStatus("success")
-                    resetForm()
                 }
             })
             .catch(() => {
@@ -93,15 +86,14 @@ const Appointment  = (
                 if (res.status === 200){
                     dispatch(deleteAppointment(editElement.id))
                     setModalOpened(false)
-                    resetForm()
                 }
             })
     }
 
     return(
         <div>
-            {ModalField("Time cell id", timeCellId, setTimeCellId, editElement.timeCellId)}
-            {ModalField("Description", description, setDescription, editElement.description)}
+            {ModalField("Time cell id", timeCellId, editElement.timeCellId)}
+            {ModalField("Description", description, editElement.description)}
             {
                 onEdit ?
                     <ButtonContainer>
