@@ -10,8 +10,8 @@ const AppWrapper = styled.div`
 
 export default function App() {
     return (
-            <AppWrapper>
-                <RouterProvider router={router} />
-            </AppWrapper>
+        <AppWrapper>
+            <RouterProvider router={router} />
+        </AppWrapper>
     )
 }
