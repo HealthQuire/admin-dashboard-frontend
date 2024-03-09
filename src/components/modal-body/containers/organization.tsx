@@ -1,6 +1,6 @@
 import ModalField from "../modal-field.tsx";
 import {ButtonContainer, ModalButton} from "../styles.ts";
-import {Dispatch, SetStateAction, useState} from "react";
+import {Dispatch, SetStateAction, useRef} from "react";
 import theme from "../../../styles/theme.ts";
 import {app} from "../../../lib/axios.ts";
 import {addOrganization, deleteOrganization, editOrganization} from "../../../store/organizations/reducer.ts";
@@ -19,22 +19,15 @@ const Organization = (
 
     const dispatch = useDispatch();
 
-    const [ownerId, setOwnerId] = useState<string>(initOrganization.ownerId)
-    const [name, setName] = useState<string>(initOrganization.name)
-    const [status, setStatus] = useState<string>(initOrganization.status)
-
-
-    const resetForm = () => {
-        setName("")
-        setStatus("")
-        setOwnerId("")
-    }
+    const ownerId = useRef<HTMLInputElement>(null);
+    const name = useRef<HTMLInputElement>(null);
+    const status = useRef<HTMLInputElement>(null);
 
     const buildObject = () => {
         const obj: INewOrganization = {
-            ownerId: ownerId,
-            name: name,
-            status: status
+            ownerId: ownerId.current ? ownerId.current.value : "",
+            name: name.current ? name.current.value : "",
+            status: status.current ? status.current.value : ""
         };
         return obj
     }
@@ -56,7 +49,6 @@ const Organization = (
                     }
                     dispatch(addOrganization(shortEntity))
                     setResponseStatus("success")
-                    resetForm()
                 }
             })
             .catch(() => {
@@ -81,7 +73,6 @@ const Organization = (
                     }
                     dispatch(editOrganization(shortEntity))
                     setResponseStatus("success")
-                    resetForm()
                 }
             })
             .catch(() => {
@@ -97,16 +88,15 @@ const Organization = (
                 if (res.status === 200){
                     dispatch(deleteOrganization(editElement.id))
                     setModalOpened(false)
-                    resetForm()
                 }
             })
     }
 
     return(
         <div>
-            {ModalField("Owner Id", ownerId, setOwnerId, editElement.ownerId)}
-            {ModalField("Name", name, setName, editElement.name)}
-            {ModalField("Status", status, setStatus, editElement.status)}
+            {ModalField("Owner Id", ownerId, editElement.ownerId)}
+            {ModalField("Name", name, editElement.name)}
+            {ModalField("Status", status, editElement.status)}
             {
             onEdit ?
                 <ButtonContainer>

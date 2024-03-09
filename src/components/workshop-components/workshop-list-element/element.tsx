@@ -2,6 +2,7 @@ import {ElementWrapper, ElementMain, ElementInteraction, ElementButton} from "./
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import {Dispatch, SetStateAction} from "react";
 import {IShortEntity} from "../../../@types/shortEntity.ts";
+import theme from "../../../styles/theme.ts";
 
 interface IWorkshopListElement {
     element: IShortEntity;
@@ -19,8 +20,8 @@ export default function WorkshopListElement({element, trigger, elementTrigger} :
     return(
         <ElementWrapper key={element.id}>
             <ElementMain>
-                <p>{element.id}</p>
-                <p style={{marginLeft: '15px'}}>{element.name}</p>
+                <p style={{color: theme.colors.bgPads, margin: 0, fontSize: "12px"}}>id: {element.id}</p>
+                <p style={{margin: 0, marginTop: "3px"}}>{element.name}</p>
             </ElementMain>
             <ElementInteraction>
                 <ElementButton onClick={() => openModal()} icon={faPencil} />

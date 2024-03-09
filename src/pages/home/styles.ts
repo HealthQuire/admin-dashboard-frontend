@@ -3,6 +3,16 @@ import theme from "../../styles/theme.ts";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
+export const ExpandIcon = styled(FontAwesomeIcon)`
+    margin-right: 20px;
+    &:hover{
+      opacity: 0.5;
+    }
+`
+export const ElIcon = styled(FontAwesomeIcon)`
+  font-size: 35px
+`
+
 export const HomePageWrapper = styled.div`
   width: 100%;
   min-height: 100vh;
@@ -23,7 +33,7 @@ export const HomePageBlock = styled.div`
   overflow: hidden;
 `;
 
-export const HomePageBlockElement = styled.div`
+export const HomePageBlockElement = styled(Link)`
   width: 32%;
   height: 240px;
   display: flex;
@@ -31,6 +41,17 @@ export const HomePageBlockElement = styled.div`
   align-items: center;
   justify-content: center;
   background-color: ${theme.colors.bgSecondary};
+
+  &:hover {
+    //opacity: 0.5;
+
+    ${ElIcon} {
+      transition-property: filter, color;
+      transition-duration: .3s;
+      filter: drop-shadow(0 0 15px ${theme.colors.accentTwo});
+      color: ${theme.colors.accentTwo};
+    }
+  }
 `;
 
 export const HomePageBlockElementToApp = styled(Link)`
@@ -58,7 +79,7 @@ export const HPBHeaderToApp = styled.div`
   margin: 0;
 `;
 
-export const HPBHeader = styled(Link)`
+export const HPBHeader = styled.div`
   width: 100%;
   height: 60px;
   display: flex;
@@ -67,9 +88,6 @@ export const HPBHeader = styled(Link)`
   justify-content: space-between;
   border-bottom: 1px solid ${theme.colors.br};
   margin: 0;
-  &:hover {
-    opacity: 0.5;
-  }
 `;
 
 export const HPBHeaderText = styled.div`
@@ -149,10 +167,3 @@ export const HomePageBlockCentralElementRight = styled.div`
   justify-content: center;
   background-color: ${theme.colors.bgSecondary};
 `;
-
-export const ExpandIcon = styled(FontAwesomeIcon)`
-    margin-right: 20px;
-    &:hover{
-      opacity: 0.5;
-    }
-`

@@ -1,4 +1,5 @@
 import {
+    ElIcon,
     ExpandIcon,
     HomePageBlock,
     HomePageBlockCentral,
@@ -25,7 +26,7 @@ import { HPBlocks } from "./content.ts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSliders, faRoute, faExpand } from '@fortawesome/free-solid-svg-icons'
 
-import Chart from "../../components/home-components/Chart";
+// import Chart from "../../components/home-components/Chart";
 import theme from "../../styles/theme.ts";
 import {nanoid} from "@reduxjs/toolkit";
 import {useNavigate} from "react-router-dom";
@@ -132,15 +133,15 @@ export default function Home() {
           {HPBlocks.map(block =>
               <HomePageBlock key={nanoid()}>
                   { block.map(element =>
-                  <HomePageBlockElement key={nanoid()}>
-                      <HPBHeader to={element.to}>
+                  <HomePageBlockElement key={nanoid()} to={element.to}>
+                      <HPBHeader>
                           <HPBHeaderText>
                             {element.text}
                           </HPBHeaderText>
                           <FontAwesomeIcon style={{marginRight: "20px"}} icon={faSliders}></FontAwesomeIcon>
                       </HPBHeader>
                       <HPBBody>
-                          {Chart(Math.floor(Math.random() * (300)), 300, element.statuses)}
+                          <ElIcon icon={element.icon}></ElIcon>
                       </HPBBody>
                   </HomePageBlockElement>
                   )}
@@ -152,7 +153,7 @@ export default function Home() {
                           </HPBHeaderText>
                       </HPBHeaderToApp>
                       <HPBBody style={{flexDirection: "column"}}>
-                          <FontAwesomeIcon style={{marginRight: "23px", fontSize: "50px"}}
+                          <FontAwesomeIcon style={{marginRight: "23px", fontSize: "40px"}}
                                            icon={faRoute}></FontAwesomeIcon>
                           <div style={{marginTop: "20px"}}>https://github.com/HealthQuire</div>
                       </HPBBody>
