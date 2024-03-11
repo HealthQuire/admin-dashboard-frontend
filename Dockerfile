@@ -1,8 +1,8 @@
 FROM node:18-alpine
 
-EXPOSE 3443
+EXPOSE 3005
 
-WORKDIR /healthquire-dashboard
+WORKDIR /admin-dashboard-frontend
 
 COPY package.json package-lock.json ./
 
@@ -10,4 +10,4 @@ RUN npm install
 
 COPY . ./
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "prod"]
