@@ -1,6 +1,6 @@
 export interface IDoctor {
-    id: number,
-    userId: number,
+    id: string,
+    userId: string,
     avatarUrl: string,
     email: string,
     password: string,
@@ -30,11 +30,12 @@ export interface INewDoctor {
     yearStarted: string,
     medService: string,
     description: string,
+    avatarUrl: string,
 }
 
 export const initDoctor: IDoctor = {
-    id: 0,
-    userId: 0,
+    id: "",
+    userId: "",
     avatarUrl: "",
     email: "",
     password: "",

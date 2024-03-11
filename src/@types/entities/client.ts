@@ -1,6 +1,6 @@
 export interface IClient {
-    id: number;
-    userId: number,
+    id: string;
+    userId: string,
     avatarUrl: string,
     email: string,
     password: string,
@@ -20,10 +20,11 @@ export interface INewClient {
     firstName: string,
     lastName: string,
     fatherName: string
+    avatarUrl: string,
 }
 export const initClient: IClient = {
-    id: 0,
-    userId: 0,
+    id: "",
+    userId: "",
     avatarUrl: "",
     email: "",
     password: "",

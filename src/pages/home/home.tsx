@@ -1,5 +1,4 @@
 import {
-    ElIcon,
     ExpandIcon,
     HomePageBlock,
     HomePageBlockCentral,
@@ -21,12 +20,12 @@ import HPBCBodyAppointmentsElement
 import HPBCBodyOrganizationsElement
     from "../../components/home-components/HPBC/Organization/HPBCBodyOrganizationsElement.tsx";
 
-import { HPBlocks } from "./content.ts";
+import {HPBlocks, mPO, rA} from "./content.ts";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSliders, faRoute, faExpand } from '@fortawesome/free-solid-svg-icons'
 
-// import Chart from "../../components/home-components/Chart";
+import Chart from "../../components/home-components/Chart";
 import theme from "../../styles/theme.ts";
 import {nanoid} from "@reduxjs/toolkit";
 import {useNavigate} from "react-router-dom";
@@ -34,99 +33,6 @@ import {useNavigate} from "react-router-dom";
 export default function Home() {
 
     const navigate = useNavigate();
-
-    interface Appointment {
-        id: string,
-        clientFullName: string,
-        serviceName: string,
-        dt: Date,
-        isConfirmed: boolean,
-        avatarUrl: string
-    }
-
-    interface Organization {
-        id: string,
-        name: string,
-        status: boolean,
-        avatarUrl: string
-    }
-
-    const rA: Appointment[] = [
-        {
-            id: "1",
-            clientFullName: "Client Jackson",
-            serviceName: "Full observation",
-            dt: new Date(),
-            isConfirmed: true,
-            avatarUrl: "/userDefault.avif"
-        },
-        {
-            id: "2",
-            clientFullName: "Bob Carti",
-            serviceName: "Stomach check",
-            dt: new Date(),
-            isConfirmed: false,
-            avatarUrl: "/userDefault.avif"
-        },
-        {
-            id: "3",
-            clientFullName: "Jennie O",
-            serviceName: "Uzi",
-            dt: new Date(),
-            isConfirmed: true,
-            avatarUrl: "/userDefault.avif"
-        },
-        {
-            id: "4",
-            clientFullName: "Benedikt Cumberbatch",
-            serviceName: "Teeth check",
-            dt: new Date(),
-            isConfirmed: true,
-            avatarUrl: "/userDefault.avif"
-        },
-        {
-            id: "5",
-            clientFullName: "Ivanov Ivan",
-            serviceName: "Ear check",
-            dt: new Date(),
-            isConfirmed: false,
-            avatarUrl: "/userDefault.avif"
-        }
-    ]
-
-    const mPO: Organization[] = [
-        {
-            id: "1",
-            name: "HealthQuired",
-            status: true,
-            avatarUrl: "/orgDefault.avif"
-        },
-        {
-            id: "2",
-            name: "MedHouse",
-            status: true,
-            avatarUrl: "/orgDefault.avif"
-        },
-        {
-            id: "3",
-            name: "GoAndHeal",
-            status: true,
-            avatarUrl: "/orgDefault.avif"
-        },
-        {
-            id: "4",
-            name: "HealthyHeart",
-            status: false,
-            avatarUrl: "/orgDefault.avif"
-        },
-        {
-            id: "5",
-            name: "FamilyTherapy",
-            status: true,
-            avatarUrl: "/orgDefault.avif"
-        },
-    ]
-
 
     return (
       <HomePageWrapper>
@@ -141,7 +47,8 @@ export default function Home() {
                           <FontAwesomeIcon style={{marginRight: "20px"}} icon={faSliders}></FontAwesomeIcon>
                       </HPBHeader>
                       <HPBBody>
-                          <ElIcon icon={element.icon}></ElIcon>
+                          {Chart((Math.random() * 70 + 20) % 100, 100, element.statuses)}
+                          {/*<ElIcon icon={element.icon}></ElIcon>*/}
                       </HPBBody>
                   </HomePageBlockElement>
                   )}
@@ -166,7 +73,7 @@ export default function Home() {
               <HomePageBlockCentralElementLeft>
                   <HPBCHeader>
                       <HPBHeaderText>
-                          Recent appointments
+                          Recently added appointments
                       </HPBHeaderText>
                       <ExpandIcon onClick={() => navigate("/appointments")} icon={faExpand}/>
                   </HPBCHeader>
@@ -179,7 +86,7 @@ export default function Home() {
               <HomePageBlockCentralElementRight>
                   <HPBCHeader>
                       <HPBHeaderText>
-                          Recent organizations
+                          Recently added organizations
                       </HPBHeaderText>
                       <ExpandIcon onClick={() => navigate("/organizations")} icon={faExpand}/>
                   </HPBCHeader>

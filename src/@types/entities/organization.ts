@@ -1,5 +1,5 @@
 export interface IOrganization {
-    id: number;
+    id: string;
     ownerId: string;
     name: string;
     status: string;
@@ -12,7 +12,7 @@ export interface INewOrganization {
 }
 
 export const initOrganization: IOrganization = {
-    id: 0,
+    id: "",
     ownerId: "",
     name: "",
     status: ""

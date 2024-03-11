@@ -1,4 +1,4 @@
-import {app} from "../lib/axios.ts";
+import {app, userServiceApp} from "../lib/axios.ts";
 import {Dispatch} from "react";
 import {AnyAction} from "@reduxjs/toolkit";
 import {setGeneralOrganizations} from "../store/organizations/reducer.ts";
@@ -14,13 +14,13 @@ import {IAppointment} from "../@types/entities/appointment.ts";
 import {IManager} from "../@types/entities/manager.ts";
 
 export const getGeneralDataByLocation = (dispatch: Dispatch<AnyAction>, location: string) : void => {
-    app.get(`/${location}`)
-        .then(res => {
-            if (res.status === 200){
-                let data = []
-                switch (location){
-                    case "organizations":
-                        data = res.data.map((x: IOrganization) => {
+
+    switch (location){
+        case "organizations":
+            userServiceApp.get('/organizations')
+                .then(res => {
+                    if (res.status === 200){
+                        const data = res.data.map((x: IOrganization) => {
                             const entity: IShortEntity = {
                                 id: x.id,
                                 name: x.name
@@ -28,29 +28,59 @@ export const getGeneralDataByLocation = (dispatch: Dispatch<AnyAction>, location
                             return entity
                         })
                         dispatch(setGeneralOrganizations(data))
-                        break
-                    case "doctors":
-                        data = res.data.map((x: IDoctor) => {
+                    }
+                })
+            break
+        case "managers":
+            userServiceApp.get('/managers')
+                .then(res => {
+                    if (res.status === 200){
+                        const data = res.data.map((x: IManager) => {
                             const entity: IShortEntity = {
                                 id: x.id,
-                                name: x.lastName
+                                name: x.firstName + " " + x.lastName
+                            }
+                            return entity
+                        })
+                        dispatch(setGeneralManagers(data))
+                    }
+                })
+            break
+        case "doctors":
+            app.get('/doctor')
+                .then(res => {
+                    if (res.status === 200){
+                        const data = res.data.map((x: IDoctor) => {
+                            const entity: IShortEntity = {
+                                id: x.id,
+                                name: x.firstName + " " + x.lastName
                             }
                             return entity
                         })
                         dispatch(setGeneralDoctors(data))
-                        break
-                    case "clients":
-                        data = res.data.map((x: IClient) => {
+                    }
+                })
+            break
+        case "clients":
+            app.get('/customer')
+                .then(res => {
+                    if (res.status === 200){
+                        const data = res.data.map((x: IClient) => {
                             const entity: IShortEntity = {
                                 id: x.id,
-                                name: x.lastName
+                                name: x.firstName + " " + x.lastName
                             }
                             return entity
                         })
                         dispatch(setGeneralClients(data))
-                        break
-                    case "appointments":
-                        data = res.data.map((x: IAppointment) => {
+                    }
+                })
+            break
+        case "appointments":
+            app.get('/appointment')
+                .then(res => {
+                    if (res.status === 200){
+                        const data = res.data.map((x: IAppointment) => {
                             const entity: IShortEntity = {
                                 id: x.id,
                                 name: `Time cell - ${x.timeCellId}`
@@ -58,18 +88,69 @@ export const getGeneralDataByLocation = (dispatch: Dispatch<AnyAction>, location
                             return entity
                         })
                         dispatch(setGeneralAppointments(data))
-                        break
-                    case "managers":
-                        data = res.data.map((x: IManager) => {
-                            const entity: IShortEntity = {
-                                id: x.id,
-                                name: x.lastName
-                            }
-                            return entity
-                        })
-                        dispatch(setGeneralManagers(data))
-                        break
-                }
-            }
-        })
+                    }
+                })
+            break
+        default:
+            break
+    }
+
+    // app.get(`/${location}`)
+    //     .then(res => {
+    //         if (res.status === 200){
+    //             let data = []
+    //             switch (location){
+    //                 case "organizations":
+    //                     data = res.data.map((x: IOrganization) => {
+    //                         const entity: IShortEntity = {
+    //                             id: x.id,
+    //                             name: x.name
+    //                         }
+    //                         return entity
+    //                     })
+    //                     dispatch(setGeneralOrganizations(data))
+    //                     break
+    //                 case "doctors":
+    //                     data = res.data.map((x: IDoctor) => {
+    //                         const entity: IShortEntity = {
+    //                             id: x.id,
+    //                             name: x.lastName
+    //                         }
+    //                         return entity
+    //                     })
+    //                     dispatch(setGeneralDoctors(data))
+    //                     break
+    //                 case "clients":
+    //                     data = res.data.map((x: IClient) => {
+    //                         const entity: IShortEntity = {
+    //                             id: x.id,
+    //                             name: x.lastName
+    //                         }
+    //                         return entity
+    //                     })
+    //                     dispatch(setGeneralClients(data))
+    //                     break
+    //                 case "appointments":
+    //                     data = res.data.map((x: IAppointment) => {
+    //                         const entity: IShortEntity = {
+    //                             id: x.id,
+    //                             name: `Time cell - ${x.timeCellId}`
+    //                         }
+    //                         return entity
+    //                     })
+    //                     dispatch(setGeneralAppointments(data))
+    //                     break
+    //                 case "managers":
+    //                     data = res.data.map((x: IManager) => {
+    //                         const entity: IShortEntity = {
+    //                             id: x.id,
+    //                             name: x.lastName
+    //                         }
+    //                         return entity
+    //                     })
+    //                     dispatch(setGeneralManagers(data))
+    //                     break
+    //             }
+    //         }
+    //     })
 }
