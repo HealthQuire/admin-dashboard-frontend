@@ -1,8 +1,17 @@
-import {createBrowserRouter} from "react-router-dom"
+import {createBrowserRouter, Navigate} from "react-router-dom"
 import RouterWrapper from "./components/router-wrapper/router-wrapper"
 import Home from "./pages/home"
 import Workshop from "./pages/workshop";
 import Login from "./pages/login";
+
+const ProtectedRoute = ({ children }) => {
+    const res = localStorage.getItem("hq_id");
+    if (!res) {
+        return <Navigate to="/login" replace />;
+    }
+
+    return children;
+};
 
 const router = createBrowserRouter([
     {
@@ -11,31 +20,59 @@ const router = createBrowserRouter([
     },
     {
         path: "/",
-        element: <RouterWrapper />,
+        element: (
+            <ProtectedRoute>
+                <RouterWrapper />
+            </ProtectedRoute>
+        ),
         children: [
             {
                 path: "/",
-                element: <Home />
+                element: (
+                    <ProtectedRoute>
+                        <Home />
+                    </ProtectedRoute>
+                )
             },
             {
                 path: "organizations",
-                element: <Workshop />
+                element: (
+                    <ProtectedRoute>
+                        <Workshop />
+                    </ProtectedRoute>
+                )
             },
             {
                 path: "doctors",
-                element: <Workshop />
+                element: (
+                    <ProtectedRoute>
+                        <Workshop />
+                    </ProtectedRoute>
+                )
             },
             {
                 path: "clients",
-                element: <Workshop />
+                element: (
+                    <ProtectedRoute>
+                        <Workshop />
+                    </ProtectedRoute>
+                )
             },
             {
                 path: "appointments",
-                element: <Workshop />
+                element: (
+                    <ProtectedRoute>
+                        <Workshop />
+                    </ProtectedRoute>
+                )
             },
             {
                 path: "managers",
-                element: <Workshop />
+                element: (
+                    <ProtectedRoute>
+                        <Workshop />
+                    </ProtectedRoute>
+                )
             }
         ]
     }

@@ -9,32 +9,35 @@ import {
     LoginPageWrapper
 } from './styles.ts';
 import { useState } from 'react';
-import {app} from "../../lib/axios.ts";
+// import {userServiceApp} from "../../lib/axios.ts";
+import {useNavigate} from "react-router-dom";
 
 export const Login = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState('');
+
+    const navigate = useNavigate();
+
+    // const [error, setError] = useState('');
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const onSubmit = () => {
-        setIsLoading(true)
 
-        const obj = {
-            "login": login,
-            "password": password
-        }
+        localStorage.setItem("hq_id", "id")
+        navigate("/")
 
-        app.post('/login', obj)
-            .then(res => {
-                if (res.status == 200){
-                    // processes with tokens and set user authenticated for auth wrapper
-                }
-                else{
-                    setError(res.statusText)
-                }
-            })
+        // const obj = {
+        //     "login": login,
+        //     "password": password
+        // }
 
-        setIsLoading(false)
+        // userServiceApp.post('/login', obj)
+        //     .then(res => {
+        //         if (res.status == 200){
+        //             localStorage.setItem("hq_id", res.data.id)
+        //         }
+        //         else{
+        //             setError(res.statusText)
+        //         }
+        //     })
     };
 
     return (
@@ -70,10 +73,10 @@ export const Login = () => {
                         <FormLabel htmlFor="password">Пароль:</FormLabel>
                     </InputGroup>
 
-                    <Button type="submit" disabled={isLoading || !(login && password)}>
+                    <Button type="submit" disabled={!(login && password)}>
                         Войти
                     </Button>
-                    {error && <div style={{ color: 'red' }}>{error}</div>}
+                    {/*{error && <div style={{ color: 'red' }}>{error}</div>}*/}
                 </LoginForm>
             </LoginPageContainer>
         </LoginPageWrapper>
