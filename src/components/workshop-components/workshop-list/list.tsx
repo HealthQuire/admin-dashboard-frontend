@@ -11,14 +11,14 @@ import Client from "../../modal-body/containers/client.tsx";
 import Appointment from "../../modal-body/containers/appointment.tsx";
 import Manager from "../../modal-body/containers/manager.tsx";
 import {initShortEntity, IShortEntity} from "../../../@types/shortEntity.ts";
-import {app} from "../../../lib/axios.ts";
+import { userServiceApp, doctorServiceApp } from "../../../lib/axios.ts";
 import {initOrganization, IOrganization} from "../../../@types/entities/organization.ts";
 import {IClient, initClient} from "../../../@types/entities/client.ts";
 import {IDoctor, initDoctor} from "../../../@types/entities/doctor.ts";
 import {IAppointment, initAppointment} from "../../../@types/entities/appointment.ts";
 import {IManager, initManager} from "../../../@types/entities/manager.ts";
 
-const passLock = "***hidden***"
+const passLock = "********"
 
 export default function WorkshopList(data: IShortEntity[], location: string){
 
@@ -39,10 +39,41 @@ export default function WorkshopList(data: IShortEntity[], location: string){
     const [openedManager, setOpenedManager] =
         useState<IManager>(initManager)
 
+    const chooseRequestString = () => {
+        switch (location) {
+            case "organizations":
+            case "managers":
+                return location
+            case "doctors":
+                return "doctor"
+            case "clients":
+                return "customer"
+            case "appointments":
+                return "appointment"
+        }
+    }
+
+    const chooseSender = () => {
+        switch (location) {
+            case "organizations":
+            case "managers":
+                return userServiceApp
+            case "doctors":
+            case "clients":
+            case "appointments":
+                return doctorServiceApp
+            default:
+                return userServiceApp
+        }
+    }
+
     useEffect(() => {
         if (!editWindowOpened) { return }
         if (elementEditOpened != initShortEntity){
-            app.get(`/${location}/${elementEditOpened.id}`).then(res => {
+
+            const sender = chooseSender()
+
+            sender.get(`/${chooseRequestString()}/${elementEditOpened.id}`).then(res => {
                 if (res.status == 200){
                     if (Object.prototype.hasOwnProperty.call(res.data, "password")){
                         res.data.password = passLock

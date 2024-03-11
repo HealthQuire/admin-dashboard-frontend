@@ -2,7 +2,7 @@ import ModalField from "../modal-field.tsx";
 import {ButtonContainer, ModalButton} from "../styles.ts";
 import {Dispatch, SetStateAction, useRef} from "react";
 import theme from "../../../styles/theme.ts";
-import {app} from "../../../lib/axios.ts";
+import {userServiceApp} from "../../../lib/axios.ts";
 import {useDispatch} from "react-redux";
 import {addManager, deleteManager, editManager} from "../../../store/managers/reducer.ts";
 import {IManager, INewManager, initManager} from "../../../@types/entities/manager.ts";
@@ -32,18 +32,93 @@ const Manager  = (
         const obj: INewManager = {
             email: email.current ? email.current.value : "",
             password: password.current ? password.current.value : "",
-            role: role.current ? role.current.value : "",
+            role: role.current ? parseInt(role.current.value) : 0,
             phone: phone.current ? phone.current.value : "",
             medCentreId: medCentreId.current ? medCentreId.current.value : "",
             status: status.current ? status.current.value : "",
             firstName: firstName.current ? firstName.current.value : "",
             lastName: lastName.current ? lastName.current.value : "",
             fatherName: fatherName.current ? fatherName.current.value : "",
+            avatarUrl: ""
         };
         return obj
     }
 
+    const buildEditObj = () => {
+
+        const editObj = {
+            patchUserDoc: [],
+            patchManagerDoc: []
+        };
+
+        if (email.current != null && email.current.value != ""){
+            editObj.patchUserDoc.push({
+                "path": "email",
+                "op": "replace",
+                "value": email.current.value
+            })
+        }
+        if (password.current != null && password.current.value != ""){
+            editObj.patchUserDoc.push({
+                "path": "password",
+                "op": "replace",
+                "value": password.current.value
+            })
+        }
+        if (role.current != null && role.current.value != ""){
+            editObj.patchUserDoc.push({
+                "path": "status",
+                "op": "replace",
+                "value": parseInt(role.current.value)
+            })
+        }
+        if (phone.current != null && phone.current.value != ""){
+            editObj.patchUserDoc.push({
+                "path": "phone",
+                "op": "replace",
+                "value": phone.current.value
+            })
+        }
+        if (medCentreId.current != null && medCentreId.current.value != ""){
+            editObj.patchManagerDoc.push({
+                "path": "medCentreId",
+                "op": "replace",
+                "value": medCentreId.current.value
+            })
+        }
+        if (status.current != null && status.current.value != ""){
+            editObj.patchUserDoc.push({
+                "path": "status",
+                "op": "replace",
+                "value": status.current.value
+            })
+        }
+        if (firstName.current != null && firstName.current.value != ""){
+            editObj.patchManagerDoc.push({
+                "path": "firstName",
+                "op": "replace",
+                "value": firstName.current.value
+            })
+        }
+        if (lastName.current != null && lastName.current.value != ""){
+            editObj.patchManagerDoc.push({
+                "path": "lastName",
+                "op": "replace",
+                "value": lastName.current.value
+            })
+        }
+        if (fatherName.current != null && fatherName.current.value != ""){
+            editObj.patchManagerDoc.push({
+                "path": "fatherName",
+                "op": "replace",
+                "value": fatherName.current.value
+            })
+        }
+        return editObj
+    }
+
     const create = async () => {
+        setResponseStatus("")
         const validObj = await managerSchema
             .validate(buildObject())
             .catch(err => {
@@ -51,36 +126,32 @@ const Manager  = (
             })
         if (!validObj) return
 
-        app.post("/managers", validObj)
+        userServiceApp.post("/managers", validObj)
             .then(res => {
                 if (res.status === 200){
+                    console.log(res.data)
                     const shortEntity: IShortEntity = {
                         id: res.data.id,
-                        name: res.data.lastName
+                        name: res.data.firstname + " " + res.data.lastname
                     }
                     dispatch(addManager(shortEntity))
                     setResponseStatus("success")
                 }
             })
-            .catch(() => {
-                setResponseStatus("error")
+            .catch(res => {
+                setResponseStatus(res.message)
             })
     }
 
     const edit = async () => {
-        const validObj = await managerSchema
-            .validate(buildObject())
-            .catch(err => {
-                setResponseStatus(err.message)
-            })
-        if (!validObj) return
+        setResponseStatus("")
 
-        app.patch(`/managers/${editElement.id}`, validObj)
+        userServiceApp.patch(`/managers/${editElement.id}`, buildEditObj())
             .then(res => {
                 if (res.status === 200){
                     const shortEntity: IShortEntity = {
                         id: res.data.id,
-                        name: res.data.lastName
+                        name: res.data.firstname + " " + res.data.lastname
                     }
                     dispatch(editManager(shortEntity))
                     setResponseStatus("success")
@@ -93,8 +164,8 @@ const Manager  = (
 
     const remove = () => {
         if (!window.confirm(`Are you sure you want to delete (id=${editElement.id}) object?`)) { return }
-
-        app.delete(`/managers/${editElement.id}`)
+        setResponseStatus("")
+        userServiceApp.delete(`/managers/${editElement.id}`)
             .then(res => {
                 if (res.status === 200){
                     dispatch(deleteManager(editElement.id))
@@ -107,7 +178,7 @@ const Manager  = (
         <div>
             {ModalField("Email", email, editElement.email)}
             {ModalField("Password", password, editElement.password)}
-            {ModalField("Role", role, editElement.role)}
+            {ModalField("Role", role, editElement.role ? editElement.role.toString() : "")}
             {ModalField("Phone Number", phone, editElement.phone)}
             {ModalField("Status", status, editElement.status)}
             {ModalField("Med centre id", medCentreId, editElement.medCentreId)}

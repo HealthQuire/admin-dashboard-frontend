@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const doctorSchema = yup.object({
-    medCentreId: yup.number().typeError("wrong med centre id"),
+    medCentreId: yup.string().typeError("wrong med centre id"),
     email: yup.string().typeError("wrong email"),
     password: yup.string().typeError("wrong password"),
     phone: yup.string().typeError("wrong phone"),

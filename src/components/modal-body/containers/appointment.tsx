@@ -29,7 +29,6 @@ const Appointment  = (
         return obj
     }
 
-
     const create = async () => {
         const validObj = await appointmentSchema
             .validate(buildObject())

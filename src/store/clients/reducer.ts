@@ -26,7 +26,7 @@ const clientsSlice = createSlice({
             state.entities = state.entities.map(x =>
                 x.id == action.payload.id ? action.payload : x)
         },
-        deleteClient: (state, action: PayloadAction<number>) => {
+        deleteClient: (state, action: PayloadAction<string>) => {
             const ind = state.entities.findIndex(x =>
                 x.id == action.payload)
             state.entities.splice(ind, 1)

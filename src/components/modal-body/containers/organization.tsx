@@ -2,10 +2,10 @@ import ModalField from "../modal-field.tsx";
 import {ButtonContainer, ModalButton} from "../styles.ts";
 import {Dispatch, SetStateAction, useRef} from "react";
 import theme from "../../../styles/theme.ts";
-import {app} from "../../../lib/axios.ts";
+import {userServiceApp} from "../../../lib/axios.ts";
 import {addOrganization, deleteOrganization, editOrganization} from "../../../store/organizations/reducer.ts";
 import {useDispatch} from "react-redux";
-import {INewOrganization, initOrganization, IOrganization} from "../../../@types/entities/organization.ts";
+import {initOrganization, IOrganization} from "../../../@types/entities/organization.ts";
 import {organizationSchema} from "../../../schemas/organizationSchema.ts";
 import {IShortEntity} from "../../../@types/shortEntity.ts";
 
@@ -24,7 +24,7 @@ const Organization = (
     const status = useRef<HTMLInputElement>(null);
 
     const buildObject = () => {
-        const obj: INewOrganization = {
+        const obj = {
             ownerId: ownerId.current ? ownerId.current.value : "",
             name: name.current ? name.current.value : "",
             status: status.current ? status.current.value : ""
@@ -32,7 +32,34 @@ const Organization = (
         return obj
     }
 
+    const buildEditObj = () => {
+        const editObj = []
+        if (ownerId.current != null && ownerId.current.value != ""){
+            editObj.push({
+                "path": "ownerId",
+                "op": "replace",
+                "value": ownerId.current.value
+            })
+        }
+        if (name.current != null && name.current.value != ""){
+            editObj.push({
+                "path": "name",
+                "op": "replace",
+                "value": name.current.value
+            })
+        }
+        if (status.current != null && status.current.value != ""){
+            editObj.push({
+                "path": "status",
+                "op": "replace",
+                "value": status.current.value
+            })
+        }
+        return editObj
+    }
+
     const create = async () => {
+        setResponseStatus("")
         const validObj = await organizationSchema
             .validate(buildObject())
             .catch(err => {
@@ -40,7 +67,7 @@ const Organization = (
             })
         if (!validObj) return
 
-        app.post("/organizations", validObj)
+        userServiceApp.post("/organizations", validObj)
             .then(res => {
                 if (res.status === 200){
                     const shortEntity: IShortEntity = {
@@ -57,14 +84,8 @@ const Organization = (
     }
 
     const edit = async () => {
-        const validObj = await organizationSchema
-            .validate(buildObject())
-            .catch(err => {
-                setResponseStatus(err.message)
-            })
-        if (!validObj) return
-
-        app.patch(`/organizations/${editElement.id}`, validObj)
+        setResponseStatus("")
+        userServiceApp.patch(`/organizations/${editElement.id}`, buildEditObj())
             .then(res => {
                 if (res.status === 200){
                     const shortEntity: IShortEntity = {
@@ -82,8 +103,8 @@ const Organization = (
 
     const remove = () => {
         if (!window.confirm(`Are you sure you want to delete (id=${editElement.id}) object?`)) { return }
-
-        app.delete(`/organizations/${editElement.id}`)
+        setResponseStatus("")
+        userServiceApp.delete(`/organizations/${editElement.id}`)
             .then(res => {
                 if (res.status === 200){
                     dispatch(deleteOrganization(editElement.id))

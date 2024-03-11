@@ -2,8 +2,8 @@ import {PieChart, Pie, Cell, Legend} from 'recharts';
 import theme from "../../../styles/theme.ts";
 
 const COLORS: string[] = [
-    theme.colors.accentOne,
-    theme.colors.accentTwo
+    theme.colors.accentTwo,
+    theme.colors.accentOne
 ]
 
 const Chart = (active: number, all: number, statuses: string[]) => {

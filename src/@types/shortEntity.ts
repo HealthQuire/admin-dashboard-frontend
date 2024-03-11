@@ -1,10 +1,10 @@
 export interface IShortEntity {
-    id: number;
+    id: string;
     name: string;
 }
 
 
 export const initShortEntity = {
-    id: 0,
+    id: "",
     name: ""
 }

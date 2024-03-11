@@ -1,5 +1,5 @@
 export interface IAppointment {
-    id: number;
+    id: string;
     timeCellId: string;
     description: string;
 }
@@ -10,7 +10,7 @@ export interface INewAppointment {
 }
 
 export const initAppointment: IAppointment = {
-    id: 0,
+    id: "",
     timeCellId: "",
     description: ""
 }

@@ -48,7 +48,7 @@ const Client  = (
             })
         if (!validObj) return
 
-        app.post("/clients", validObj)
+        app.post("/customer/create", validObj)
             .then(res => {
                 if (res.status === 200){
                     const shortEntity: IShortEntity = {
